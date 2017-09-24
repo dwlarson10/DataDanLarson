@@ -12,11 +12,11 @@ safe: true
 
 # edit here to achieve your personal greatness
 url: https://dwlarson10.github.io/
-baseurl: /datadanlarson/
+baseurl: /DataDanLarson/
 title: Dan Larson
 author: Dan Larson
 description: Personal blog and resume
-avatar: profile2.png
+avatar: profile2.PNG
 email: dwlarson10@gmail.com
 github: dwlarson10 # username
 twitter: datadanlarson
