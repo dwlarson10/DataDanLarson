@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-10-01T15:20:24Z</updated>
+  <updated>2017-10-01T15:22:44Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
@@ -382,79 +382,85 @@ c.draw = function() {
 
 
   <entry>
-  <title type="text">Post2</title>
+  <title type="text">Analysis of Confederate memorials</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/post2.html" />
   <id>http://localhost:3000/post2</id>
   <published>2013-05-27T00:00:00Z</published>
   <updated>2013-05-27T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>require(data.world)</p>
+  <content type="html"><![CDATA[ <blockquote>
+  <p>This is Markdown Cheatsheet Demo for <strong>Sustain</strong>, this Jekyll theme. Please check the raw content of this file for the markdown usage.</p>
+</blockquote>
 
-<h2 id="loading-required-package-dataworld">Loading required package: data.world</h2>
+<p>require(data.world)</p>
 
-<p>data.world::set_config(data.world::save_config(auth_token = “eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRhdGFkYW5sYXJzb24iLCJpc3MiOiJhdXRob3JpdHk6ZGF0YWRvdHdvcmxkOjowQkYwRUJEMy0yREU3LTQ5RkItQjg3Qi1BRDAzMDU3QkI4OUUiLCJpYXQiOjE1MDQyNzIyOTAsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIiwidXNlcl9hcGlfYWRtaW4iLCJ1c2VyIl0sImV4cCI6MTUwOTQ1NjI5MCwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlLCJhdXRob3JpdHlpZHMiOlsiZGF0YWRvdHdvcmxkIl19.sOUQniICy1MaLyIe2nIf4ADjRkkciXF_0eKFegjtqwU72pRsC1gWxHFxmXgMqYbYTf1P54KMnpQmicz4OR4c0A”))</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: data.world
 
-<p>link &lt;- “https://data.world/datadanlarson/confederatemonument”
+data.world::set_config(data.world::save_config(auth_token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRhdGFkYW5sYXJzb24iLCJpc3MiOiJhdXRob3JpdHk6ZGF0YWRvdHdvcmxkOjowQkYwRUJEMy0yREU3LTQ5RkItQjg3Qi1BRDAzMDU3QkI4OUUiLCJpYXQiOjE1MDQyNzIyOTAsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIiwidXNlcl9hcGlfYWRtaW4iLCJ1c2VyIl0sImV4cCI6MTUwOTQ1NjI5MCwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlLCJhdXRob3JpdHlpZHMiOlsiZGF0YWRvdHdvcmxkIl19.sOUQniICy1MaLyIe2nIf4ADjRkkciXF_0eKFegjtqwU72pRsC1gWxHFxmXgMqYbYTf1P54KMnpQmicz4OR4c0A"))
+
+link &lt;- "https://data.world/datadanlarson/confederatemonument"
 confMon &lt;- data.world::query(
-  data.world::qry_sql(“SELECT * FROM CivilWarMamorials”),
+  data.world::qry_sql("SELECT * FROM CivilWarMamorials"),
   dataset = link
-)</p>
+)
 
-<p>require(tidyverse)</p>
+require(tidyverse)
 
-<h2 id="loading-required-package-tidyverse">Loading required package: tidyverse</h2>
+## Loading required package: tidyverse
 
-<h2 id="loading-tidyverse-ggplot2">Loading tidyverse: ggplot2</h2>
-<h2 id="loading-tidyverse-tibble">Loading tidyverse: tibble</h2>
-<h2 id="loading-tidyverse-tidyr">Loading tidyverse: tidyr</h2>
-<h2 id="loading-tidyverse-readr">Loading tidyverse: readr</h2>
-<h2 id="loading-tidyverse-purrr">Loading tidyverse: purrr</h2>
-<h2 id="loading-tidyverse-dplyr">Loading tidyverse: dplyr</h2>
+## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr
 
-<h2 id="conflicts-with-tidy-packages--">Conflicts with tidy packages ———————————————-</h2>
+## Conflicts with tidy packages ----------------------------------------------
 
-<h2 id="filter-dplyr-stats">filter(): dplyr, stats</h2>
-<h2 id="lag----dplyr-stats">lag():    dplyr, stats</h2>
-<h2 id="sql----dplyr-dwapi">sql():    dplyr, dwapi</h2>
+## filter(): dplyr, stats
+## lag():    dplyr, stats
+## sql():    dplyr, dwapi
 
-<p>confMon &lt;- as.tibble(confMon)</p>
+confMon &lt;- as.tibble(confMon)
 
-<p>confMon%&gt;%group_by(state)%&gt;%summarise(count = n())%&gt;%arrange(by=desc(count))%&gt;%ggplot()+geom_bar(aes(x=reorder(state,count),y=count),stat = ‘identity’)+coord_flip()</p>
+confMon%&gt;%group_by(state)%&gt;%summarise(count = n())%&gt;%arrange(by=desc(count))%&gt;%ggplot()+geom_bar(aes(x=reorder(state,count),y=count),stat = 'identity')+coord_flip()
+</code></pre></div></div>
 
 <p><img src="ConfMon_files/figure-markdown_strict/unnamed-chunk-2-1.png" alt="" /></p>
 
-<p>stateMon&lt;-confMon%&gt;%group_by(state)%&gt;%summarise(count = n())%&gt;% mutate(region=tolower(state))</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stateMon&lt;-confMon%&gt;%group_by(state)%&gt;%summarise(count = n())%&gt;% mutate(region=tolower(state))
 
-<p>require(maps)</p>
+require(maps)
 
-<h2 id="loading-required-package-maps">Loading required package: maps</h2>
+## Loading required package: maps
 
-<h1>#</h1>
-<h2 id="attaching-package-maps">Attaching package: ‘maps’</h2>
+##
+## Attaching package: 'maps'
 
-<h2 id="the-following-object-is-masked-from-packagepurrr">The following object is masked from ‘package:purrr’:</h2>
-<h1 id="-1">#</h1>
-<h2 id="map">map</h2>
+## The following object is masked from 'package:purrr':
+##
+##     map
 
-<p>states &lt;- map_data(‘state’)</p>
+states &lt;- map_data('state')
 
-<p>states_all &lt;- data.frame(region=unique(states$region))</p>
+states_all &lt;- data.frame(region=unique(states$region))
 
-<p>stateMon &lt;- left_join(states_all,stateMon,by=’region’)</p>
+stateMon &lt;- left_join(states_all,stateMon,by='region')
 
-<h2 id="warning-column-region-joining-factor-and-character-vector-coercing-into">Warning: Column <code class="highlighter-rouge">region</code> joining factor and character vector, coercing into</h2>
-<h2 id="character-vector">character vector</h2>
+## Warning: Column `region` joining factor and character vector, coercing into
+## character vector
 
-<p>ggplot()+
+ggplot()+
   geom_map(data=states, map=states,
                     aes(x=long, y=lat, map_id=region),
-                    fill=”#ffffff”, color=”#ffffff”, size=0.15) +
+                    fill="#ffffff", color="#ffffff", size=0.15) +
   geom_map(data=stateMon,map=states,aes(fill=count,map_id = region),
-                    color=”#ffffff”, size=0.15) +
-    scale_fill_continuous(low=’lightblue’, high=’darkblue’,
-                                 guide=’colorbar’)+
-  ggtitle(“Number of Confederate Memorials per State”)</p>
+                    color="#ffffff", size=0.15) +
+    scale_fill_continuous(low='lightblue', high='darkblue',
+                                 guide='colorbar')+
+  ggtitle("Number of Confederate Memorials per State")
 
-<h2 id="warning-ignoring-unknown-aesthetics-x-y">Warning: Ignoring unknown aesthetics: x, y</h2>
+## Warning: Ignoring unknown aesthetics: x, y
+</code></pre></div></div>
 
 <p><img src="ConfMon_files/figure-markdown_strict/unnamed-chunk-3-1.png" alt="" /></p>
  ]]></content>
