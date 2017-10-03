@@ -6,13 +6,106 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-10-03T06:56:07Z</updated>
+  <updated>2017-10-03T07:34:42Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
   </author>
   <rights type="text">Copyright © 2017 Dan Larson. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">Analysis of Confederate memorials</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/post3.html" />
+  <id>http://localhost:3000/post3</id>
+  <published>2017-10-03T00:00:00Z</published>
+  <updated>2017-10-03T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">data.world</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: data.world
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data.world</span><span class="o">::</span><span class="n">set_config</span><span class="p">(</span><span class="n">data.world</span><span class="o">::</span><span class="n">save_config</span><span class="p">(</span><span class="n">auth_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRhdGFkYW5sYXJzb24iLCJpc3MiOiJhdXRob3JpdHk6ZGF0YWRvdHdvcmxkOjowQkYwRUJEMy0yREU3LTQ5RkItQjg3Qi1BRDAzMDU3QkI4OUUiLCJpYXQiOjE1MDQyNzIyOTAsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIiwidXNlcl9hcGlfYWRtaW4iLCJ1c2VyIl0sImV4cCI6MTUwOTQ1NjI5MCwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlLCJhdXRob3JpdHlpZHMiOlsiZGF0YWRvdHdvcmxkIl19.sOUQniICy1MaLyIe2nIf4ADjRkkciXF_0eKFegjtqwU72pRsC1gWxHFxmXgMqYbYTf1P54KMnpQmicz4OR4c0A"</span><span class="p">))</span><span class="w">
+
+</span><span class="n">link</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"https://data.world/datadanlarson/confederatemonument"</span><span class="w">
+</span><span class="n">confMon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.world</span><span class="o">::</span><span class="n">query</span><span class="p">(</span><span class="w">
+  </span><span class="n">data.world</span><span class="o">::</span><span class="n">qry_sql</span><span class="p">(</span><span class="s2">"SELECT * FROM CivilWarMamorials"</span><span class="p">),</span><span class="w">
+  </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">link</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: tidyverse
+
+## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr
+
+## Conflicts with tidy packages ----------------------------------------------
+
+## filter(): dplyr, stats
+## lag():    dplyr, stats
+## sql():    dplyr, dwapi
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">confMon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="w">
+
+</span><span class="n">confMon</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="n">arrange</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="o">%&gt;%</span><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="n">geom_bar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reorder</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">count</span><span class="p">),</span><span class="n">y</span><span class="o">=</span><span class="n">count</span><span class="p">),</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'identity'</span><span class="p">)</span><span class="o">+</span><span class="n">coord_flip</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="ConfMon_files/figure-markdown_github/unnamed-chunk-2-1.png" alt="" /></p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stateMon</span><span class="o">&lt;-</span><span class="n">confMon</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">mutate</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">tolower</span><span class="p">(</span><span class="n">state</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">maps</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: maps
+
+##
+## Attaching package: 'maps'
+
+## The following object is masked from 'package:purrr':
+##
+##     map
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">states</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_data</span><span class="p">(</span><span class="s1">'state'</span><span class="p">)</span><span class="w">
+
+</span><span class="n">states_all</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">unique</span><span class="p">(</span><span class="n">states</span><span class="o">$</span><span class="n">region</span><span class="p">))</span><span class="w">
+
+</span><span class="n">stateMon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">left_join</span><span class="p">(</span><span class="n">states_all</span><span class="p">,</span><span class="n">stateMon</span><span class="p">,</span><span class="n">by</span><span class="o">=</span><span class="s1">'region'</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Warning: Column `region` joining factor and character vector, coercing into
+## character vector
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_map</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="w"> </span><span class="n">map</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="w">
+                    </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">map_id</span><span class="o">=</span><span class="n">region</span><span class="p">),</span><span class="w">
+                    </span><span class="n">fill</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">0.15</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_map</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">stateMon</span><span class="p">,</span><span class="n">map</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">count</span><span class="p">,</span><span class="n">map_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">region</span><span class="p">),</span><span class="w">
+                    </span><span class="n">color</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">0.15</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">scale_fill_continuous</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="s1">'lightblue'</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="o">=</span><span class="s1">'darkblue'</span><span class="p">,</span><span class="w">
+                                 </span><span class="n">guide</span><span class="o">=</span><span class="s1">'colorbar'</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of Confederate Memorials per State"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Warning: Ignoring unknown aesthetics: x, y
+</code></pre></div></div>
+
+<p><img src="ConfMon_files/figure-markdown_github/unnamed-chunk-3-1.png" alt="" /></p>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">A Full and Comprehensive Style Test (HTML)</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/post1.html" />
