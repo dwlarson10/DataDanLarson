@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-10-04T21:25:42Z</updated>
+  <updated>2017-10-04T21:28:07Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
@@ -89,7 +89,7 @@
 
 <p><img src="http://localhost:3000/static/img/unnamed-chunk-1-1.png" alt="States Bar" /></p>
 
-<p><img src="https://github.com/dwlarson10/DataDanLarson/blob/gh-pages/_site/static/img/unnamed-chunk-1-1.png" alt="Test Image" /></p>
+<p><img src="http://danlarson.io/static/img/unnamed-chunk-1-1.png" alt="Test Image" /></p>
 
 <p>Another way to showcase these data would be to use a map.</p>
 
@@ -133,9 +133,9 @@
 
 <p><img src="https://github.com/dwlarson10/DataDanLarson/blob/gh-pages/_site/static/img/unnamed-chunk-2-1.png" alt="States map" class="img-responsive" /></p>
 
-<p><img src="https://github.com/dwlarson10/DataDanLarson/blob/gh-pages/_site/static/img/unnamed-chunk-2-1.png" alt="Test Image" /></p>
+<p><img src="http://danlarson.io/static/img/unnamed-chunk-2-1.png" alt="Test Image" /></p>
 
-<p>Test Test Test</p>
+<h1 id="test-test-test">Test Test Test</h1>
  ]]></content>
 </entry>
 
