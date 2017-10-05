@@ -9,7 +9,7 @@
     <link rel="favicon" href="/static/img/favicon.ico">
 
     
-      <title>Analysis of Confederate memorials</title>
+      <title>Using the Tidyverse to analyze the location of Confederate Memorials</title>
     
 
     <!-- Bootstrap -->
@@ -67,12 +67,12 @@
     <div class="container">
 	<div class="blog-post">
 		<h3>
-		  <strong><a href="/post3.html">Analysis of Confederate memorials</a></strong>
+		  <strong><a href="/post3.html">Using the Tidyverse to analyze the location of Confederate Memorials</a></strong>
 		</h3>
 	</div>
 	<div class="blog-title">
 		<h4>
-		October  3, 2017
+		October  4, 2017
 			&nbsp;&nbsp;
 			
 			 <span class="label label-success">News</span>
@@ -83,56 +83,84 @@
 			
 			 <span class="label label-success">Post</span>
 			
-			 <span class="label label-success">GGplot2</span>
-			
 		</h4>
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">data.world</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+			  <h1 id="data">Data</h1>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: data.world
-</code></pre></div></div>
+<p>Following the incident in Charlottesville VA this summer, I wanted to know just how many confederate memorials there were. I reached out on Data for Democracy and found a report published by the XXXX. I then scraped the PDG and created a data set. I know it isn’t complete, but it is a great start. I have published the data set on Data.World here: <a href="https://data.world/datadanlarson/confederatemonument">https://data.world/datadanlarson/confederatemonument</a></p>
 
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data.world</span><span class="o">::</span><span class="n">set_config</span><span class="p">(</span><span class="n">data.world</span><span class="o">::</span><span class="n">save_config</span><span class="p">(</span><span class="n">auth_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRhdGFkYW5sYXJzb24iLCJpc3MiOiJhdXRob3JpdHk6ZGF0YWRvdHdvcmxkOjowQkYwRUJEMy0yREU3LTQ5RkItQjg3Qi1BRDAzMDU3QkI4OUUiLCJpYXQiOjE1MDQyNzIyOTAsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIiwidXNlcl9hcGlfYWRtaW4iLCJ1c2VyIl0sImV4cCI6MTUwOTQ1NjI5MCwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlLCJhdXRob3JpdHlpZHMiOlsiZGF0YWRvdHdvcmxkIl19.sOUQniICy1MaLyIe2nIf4ADjRkkciXF_0eKFegjtqwU72pRsC1gWxHFxmXgMqYbYTf1P54KMnpQmicz4OR4c0A"</span><span class="p">))</span><span class="w">
+<p>This post is a combination of where these memorials are located and a quick tutorial on how to use the tidyverse to analyze it.</p>
 
+<h2 id="dataworld">Data.World</h2>
+
+<p>First, let me give a shout out to data.world. If you are training to be a data scientist this is a great place to get and share data sets. There is an added bonus of getting to work with SQL to extract data.</p>
+
+<p>Below is the sequence needed to extract data from data.world.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Load the package</span><span class="w">
+</span><span class="n">require</span><span class="p">(</span><span class="n">data.world</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Setup your token</span><span class="w">
+</span><span class="n">data.world</span><span class="o">::</span><span class="n">set_config</span><span class="p">(</span><span class="n">data.world</span><span class="o">::</span><span class="n">save_config</span><span class="p">(</span><span class="n">auth_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRhdGFkYW5sYXJzb24iLCJpc3MiOiJhdXRob3JpdHk6ZGF0YWRvdHdvcmxkOjowQkYwRUJEMy0yREU3LTQ5RkItQjg3Qi1BRDAzMDU3QkI4OUUiLCJpYXQiOjE1MDQyNzIyOTAsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIiwidXNlcl9hcGlfYWRtaW4iLCJ1c2VyIl0sImV4cCI6MTUwOTQ1NjI5MCwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlLCJhdXRob3JpdHlpZHMiOlsiZGF0YWRvdHdvcmxkIl19.sOUQniICy1MaLyIe2nIf4ADjRkkciXF_0eKFegjtqwU72pRsC1gWxHFxmXgMqYbYTf1P54KMnpQmicz4OR4c0A"</span><span class="p">))</span><span class="w">
+
+</span><span class="c1">#identify the data source</span><span class="w">
 </span><span class="n">link</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"https://data.world/datadanlarson/confederatemonument"</span><span class="w">
+
+</span><span class="c1">#extract the data</span><span class="w">
 </span><span class="n">confMon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.world</span><span class="o">::</span><span class="n">query</span><span class="p">(</span><span class="w">
   </span><span class="n">data.world</span><span class="o">::</span><span class="n">qry_sql</span><span class="p">(</span><span class="s2">"SELECT * FROM CivilWarMamorials"</span><span class="p">),</span><span class="w">
   </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">link</span><span class="w">
 </span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
+<h1 id="tibbles">Tibbles</h1>
+
+<p>Once you have the data in memory, you can now transform it to a tibble. A tibble is similar to a Dataframe but a little different. I recommend reading Data Science with R by Garrett Grolemund and Hadley Wickham if you want to know more. For know, just know that they allow for easy data pipping that we will be using shortly.</p>
+
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
+</span><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: tidyverse
-
-## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr
-
-## Conflicts with tidy packages ----------------------------------------------
-
-## filter(): dplyr, stats
-## lag():    dplyr, stats
-## sql():    dplyr, dwapi
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## # A tibble: 1,528 x 6
+##             state         city             nameofartifact
+##             &lt;chr&gt;        &lt;chr&gt;                      &lt;chr&gt;
+##  1        Alabama     Anniston Major John Pelham Monument
+##  2        Alabama     Ashville       Confederate Monument
+##  3        Alabama  Centreville       Confederate Monument
+##  4        Alabama        Selma   Selma Navy Yard Memorial
+##  5 South Carolina St. Matthews           “Lest We Forget”
+##  6 South Carolina St. Matthews             Stonewall Lane
+##  7 South Carolina  Summerville           Beauregard Court
+##  8 South Carolina  Summerville            Stonewall Drive
+##  9 South Carolina Timmonsville       Robert E. Lee Avenue
+## 10 South Carolina Timmonsville            Stonewall Drive
+## # ... with 1,518 more rows, and 3 more variables: type &lt;chr&gt;, year &lt;chr&gt;,
+## #   civilwarstatus &lt;chr&gt;
 </code></pre></div></div>
 
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">confMon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="w">
+<h1 id="first-visualization">First Visualization</h1>
 
-</span><span class="n">confMon</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="n">arrange</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="o">%&gt;%</span><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="n">geom_bar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reorder</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">count</span><span class="p">),</span><span class="n">y</span><span class="o">=</span><span class="n">count</span><span class="p">),</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'identity'</span><span class="p">)</span><span class="o">+</span><span class="n">coord_flip</span><span class="p">()</span><span class="w">
+<p>Now that we have our tibble we can create out first visualization. The tidyverse package allows you to do both data transformation and visualization within one string of commands. Looking at the below text you can see that it is much cleaner than if we were to use base R.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">civilwarstatus</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reorder</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">count</span><span class="p">),</span><span class="n">y</span><span class="o">=</span><span class="n">count</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">civilwarstatus</span><span class="p">),</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'identity'</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of civil war monuments by state"</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="/static/img/_posts/ConfMon_files/figure-markdown_github/unnamed-chunk-2-1.png" alt="" /></p>
+<p><img src="ConfMon_files/figure-markdown_github/unnamed-chunk-1-1.png" alt="" /></p>
 
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stateMon</span><span class="o">&lt;-</span><span class="n">confMon</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">mutate</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">tolower</span><span class="p">(</span><span class="n">state</span><span class="p">))</span><span class="w">
-</span></code></pre></div></div>
+<p><img src="/static/img/unnamed-chunk-1" alt="States Bar" /></p>
+
+<p>Another way to showcase these data would be to use a map.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">maps</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
@@ -150,7 +178,7 @@
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">states</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_data</span><span class="p">(</span><span class="s1">'state'</span><span class="p">)</span><span class="w">
 
 </span><span class="n">states_all</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">unique</span><span class="p">(</span><span class="n">states</span><span class="o">$</span><span class="n">region</span><span class="p">))</span><span class="w">
-
+</span><span class="n">stateMon</span><span class="o">&lt;-</span><span class="n">confMon</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">mutate</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">tolower</span><span class="p">(</span><span class="n">state</span><span class="p">))</span><span class="w">
 </span><span class="n">stateMon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">left_join</span><span class="p">(</span><span class="n">states_all</span><span class="p">,</span><span class="n">stateMon</span><span class="p">,</span><span class="n">by</span><span class="o">=</span><span class="s1">'region'</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
@@ -172,7 +200,9 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Warning: Ignoring unknown aesthetics: x, y
 </code></pre></div></div>
 
-<p><img src="/static/img/_posts/ConfMon_files/figure-markdown_github/unnamed-chunk-3-1.png" alt="" /></p>
+<p><img src="ConfMon_files/figure-markdown_github/unnamed-chunk-2-1.png" alt="" /></p>
+
+<p><img src="/static/img/unnamed-chunk-2-1.png" alt="States map" /></p>
 
 			   <hr>
 			   <div class="related-posts">
