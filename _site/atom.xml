@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-10-04T21:23:20Z</updated>
+  <updated>2017-10-04T21:25:42Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
@@ -132,6 +132,10 @@
 </code></pre></div></div>
 
 <p><img src="https://github.com/dwlarson10/DataDanLarson/blob/gh-pages/_site/static/img/unnamed-chunk-2-1.png" alt="States map" class="img-responsive" /></p>
+
+<p><img src="https://github.com/dwlarson10/DataDanLarson/blob/gh-pages/_site/static/img/unnamed-chunk-2-1.png" alt="Test Image" /></p>
+
+<p>Test Test Test</p>
  ]]></content>
 </entry>
 
