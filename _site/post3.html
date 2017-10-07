@@ -88,9 +88,9 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <h1 id="data">Data</h1>
+			  <h2 id="data">Data</h2>
 
-<p>Following the incident in Charlottesville VA this summer, I wanted to know just how many confederate memorials there were. I reached out on Data for Democracy and found a report published by the XXXX. I then scraped the PDG and created a data set. I know it isn’t complete, but it is a great start. I have published the data set on Data.World here: <a href="https://data.world/datadanlarson/confederatemonument">https://data.world/datadanlarson/confederatemonument</a></p>
+<p>Following the incident in Charletsville VA this summer, I wanted to know just how many confederate memorials there were. I reached out on Data for Democracy and found a report published by the XXXX. I then scraped the PDG and created a data set. I know it isn’t complete, but it is a great start. I have published the data set on Data.World here: <a href="https://data.world/datadanlarson/confederatemonument">https://data.world/datadanlarson/confederatemonument</a></p>
 
 <p>This post is a combination of where these memorials are located and a quick tutorial on how to use the tidyverse to analyze it.</p>
 
@@ -116,9 +116,9 @@
 </span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<h1 id="tibbles">Tibbles</h1>
+<h2 id="tibbles">Tibbles</h2>
 
-<p>Once you have the data in memory, you can now transform it to a tibble. A tibble is similar to a Dataframe but a little different. I recommend reading Data Science with R by Garrett Grolemund and Hadley Wickham if you want to know more. For know, just know that they allow for easy data pipping that we will be using shortly.</p>
+<p>Once you have the data in memory, you can transform it to a tibble. A tibble is similar to a Dataframe but a little different. I recommend reading Data Science with R by Garrett Grolemund and Hadley Wickham if you want to know more. For know, just know that they allow for easy data pipping that we will be using shortly.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
 </span><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="w">
@@ -141,9 +141,53 @@
 ## #   civilwarstatus &lt;chr&gt;
 </code></pre></div></div>
 
-<h1 id="first-visualization">First Visualization</h1>
+<h2 id="summarizing-with-tidyverse">Summarizing with tidyverse</h2>
 
-<p>Now that we have our tibble we can create out first visualization. The tidyverse package allows you to do both data transformation and visualization within one string of commands. Looking at the below text you can see that it is much cleaner than if we were to use base R.</p>
+<p>The main benifit of using a tibble over a dataframe is the ease with which you can summarries your data. Without a tibble you may need to take multiple steps to subset, transform, and summarize your data. With a tibble you can do all of this with a singe chain of commands. In the code below, I am able to filter the data set to only monuments, create a table of counts by state and sort the table in only five rows of text. Additionally, I did not need to create a new dataframe.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># Create the tibble</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">civilwarstatus</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># Set the group by</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'Monument'</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># Determine how you want to summarise</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="c1"># Organize the data</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## # A tibble: 24 x 3
+## # Groups:   state [24]
+##             state    civilwarstatus count
+##             &lt;chr&gt;             &lt;chr&gt; &lt;int&gt;
+##  1 North Carolina Confederate State    50
+##  2        Georgia Confederate State    49
+##  3       Virginia Confederate State    45
+##  4       Kentucky      Border State    35
+##  5 South Carolina Confederate State    34
+##  6        Alabama Confederate State    31
+##  7          Texas Confederate State    26
+##  8      Louisiana Confederate State    23
+##  9    Mississippi Confederate State    22
+## 10       Arkansas Confederate State    21
+## # ... with 14 more rows
+</code></pre></div></div>
+
+<h2 id="first-visualization">First Visualization</h2>
+
+<p>An additional benifit of using the tidyverse is that you can pipe in the ggplot2 commands. The tidyverse package allows you to do both data transformation and visualization within one string of commands. In the code below I have added the ggplot2 commands needed to create a barchart. I want to point out that by using the tidyverse, I have been able to keep my code relatively clean and haven’t needed to create any new dataframes.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">civilwarstatus</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reorder</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">count</span><span class="p">),</span><span class="n">y</span><span class="o">=</span><span class="n">count</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">civilwarstatus</span><span class="p">),</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'identity'</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of civil war monuments by state"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="http://danlarson.io/static/img/unnamed-chunk-2-1.png" alt="Test Image" /></p>
+
+<p>While the visual above gets the job done, it is always important to clean up your visuals for publication. Using ggplot2 allows the analyst to make all of the needed adjustments to background, the legend, and other various elements to brand your visuals.</p>
+
+<p>Looking at the data we can see that there are some obvious patterns. First, the states with the most memorials are states that belonged to the confederacy. However, some boarder states have a number of memorials. As we will see in the map below, the majority of the memorials are in the south east of the country. However, there is are a suprising numbe in the North West.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">civilwarstatus</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
@@ -153,56 +197,66 @@
   </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reorder</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">count</span><span class="p">),</span><span class="n">y</span><span class="o">=</span><span class="n">count</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">civilwarstatus</span><span class="p">),</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'identity'</span><span class="p">)</span><span class="o">+</span><span class="w">
   </span><span class="n">coord_flip</span><span class="p">()</span><span class="o">+</span><span class="w">
   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of civil war monuments by state"</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="c1">#set theme to black and white</span><span class="w">
+  </span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">panel.background</span><span class="o">=</span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">"#F0F0F0"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">plot.background</span><span class="o">=</span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">"#F0F0F0"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">panel.border</span><span class="o">=</span><span class="n">element_rect</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#F0F0F0"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="c1"># Format the grid</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">panel.grid.major</span><span class="o">=</span><span class="n">element_line</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#D0D0D0"</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="m">.75</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.ticks</span><span class="o">=</span><span class="n">element_blank</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="c1"># Dispose of the legend</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span><span class="n">hjust</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">vjust</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#3C3C3C"</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ylab</span><span class="p">(</span><span class="s2">"Number of memorials"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">xlab</span><span class="p">(</span><span class="s2">"State"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">11</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#535353"</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">11</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#535353"</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">11</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#535353"</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span><span class="n">vjust</span><span class="o">=</span><span class="m">1.5</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">11</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#535353"</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span><span class="n">vjust</span><span class="o">=</span><span class="m">-.5</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="c1"># Plot margins and finally line annotations</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">plot.margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unit</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">.5</span><span class="p">,</span><span class="w"> </span><span class="m">.7</span><span class="p">),</span><span class="w"> </span><span class="s2">"cm"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://localhost:3000/static/img/unnamed-chunk-1-1.png" alt="States Bar" /></p>
+<p><img src="http://danlarson.io/static/img/unnamed-chunk-3-1.png" alt="Test Image" /></p>
 
-<p><img src="http://danlarson.io/static/img/unnamed-chunk-1-1.png" alt="Test Image" /></p>
+<h1 id="mapping-with-the-tidyverse">Mapping with the tidyverse</h1>
 
-<p>Another way to showcase these data would be to use a map.</p>
+<p>The visual above demonstates that confederate memorials are consolidated into only portion of the states, it is nice to be able to visual see how these states might be related. The tidyverse also gives the R user the ability to build maps quickly and easily. To get started we do need to bring in the ‘maps’ package.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">maps</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: maps
-
-##
-## Attaching package: 'maps'
-
-## The following object is masked from 'package:purrr':
-##
-##     map
-</code></pre></div></div>
-
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">states</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_data</span><span class="p">(</span><span class="s1">'state'</span><span class="p">)</span><span class="w">
+</span><span class="n">states</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_data</span><span class="p">(</span><span class="s1">'state'</span><span class="p">)</span><span class="w">
 
 </span><span class="n">states_all</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">unique</span><span class="p">(</span><span class="n">states</span><span class="o">$</span><span class="n">region</span><span class="p">))</span><span class="w">
 </span><span class="n">stateMon</span><span class="o">&lt;-</span><span class="n">confMon</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">%&gt;%</span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">mutate</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">tolower</span><span class="p">(</span><span class="n">state</span><span class="p">))</span><span class="w">
 </span><span class="n">stateMon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">left_join</span><span class="p">(</span><span class="n">states_all</span><span class="p">,</span><span class="n">stateMon</span><span class="p">,</span><span class="n">by</span><span class="o">=</span><span class="s1">'region'</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Warning: Column `region` joining factor and character vector, coercing into
-## character vector
-</code></pre></div></div>
-
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="w">
-  </span><span class="n">geom_map</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="w"> </span><span class="n">map</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="w">
-                    </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">map_id</span><span class="o">=</span><span class="n">region</span><span class="p">),</span><span class="w">
-                    </span><span class="n">fill</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">0.15</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
-  </span><span class="n">geom_map</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">stateMon</span><span class="p">,</span><span class="n">map</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">count</span><span class="p">,</span><span class="n">map_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">region</span><span class="p">),</span><span class="w">
-                    </span><span class="n">color</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">0.15</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
-    </span><span class="n">scale_fill_continuous</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="s1">'lightblue'</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="o">=</span><span class="s1">'darkblue'</span><span class="p">,</span><span class="w">
-                                 </span><span class="n">guide</span><span class="o">=</span><span class="s1">'colorbar'</span><span class="p">)</span><span class="o">+</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">panel.background</span><span class="o">=</span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">"#F0F0F0"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">plot.background</span><span class="o">=</span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">"#F0F0F0"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">panel.border</span><span class="o">=</span><span class="n">element_rect</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#F0F0F0"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="c1"># Format the grid</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+        </span><span class="n">axis.text.x</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+        </span><span class="n">axis.ticks.x</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+        </span><span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+        </span><span class="n">axis.text.y</span><span class="o">=</span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+        </span><span class="n">axis.ticks.y</span><span class="o">=</span><span class="n">element_blank</span><span class="p">())</span><span class="o">+</span><span class="w">
+  </span><span class="c1"># Dispose of the legend</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span><span class="n">hjust</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">vjust</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#3C3C3C"</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">))</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_map</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="w"> </span><span class="n">map</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">map_id</span><span class="o">=</span><span class="n">region</span><span class="p">),</span><span class="n">fill</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">0.15</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_map</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">stateMon</span><span class="p">,</span><span class="n">map</span><span class="o">=</span><span class="n">states</span><span class="p">,</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">count</span><span class="p">,</span><span class="n">map_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">region</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">0.15</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_fill_continuous</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="s1">'lightblue'</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="o">=</span><span class="s1">'darkblue'</span><span class="p">,</span><span class="w"> </span><span class="n">guide</span><span class="o">=</span><span class="s1">'colorbar'</span><span class="p">)</span><span class="o">+</span><span class="w">
   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of Confederate Memorials per State"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Warning: Ignoring unknown aesthetics: x, y
-</code></pre></div></div>
+<p><img src="http://danlarson.io/static/img/unnamed-chunk-4-1.png" alt="Test Image" /></p>
 
-<p><img src="https://github.com/dwlarson10/DataDanLarson/blob/gh-pages/_site/static/img/unnamed-chunk-2-1.png" alt="States map" class="img-responsive" /></p>
+<h2 id="wrapping-up">Wrapping up</h2>
 
-<p><img src="http://danlarson.io/static/img/unnamed-chunk-2-1.png" alt="Test Image" /></p>
+<p>Using the tibbles, tidyr, dplr, and ggplot2 allow for very quick and easy manipulation of data. With fewer then ten lines of code you are up have visualizations without filling up your environment with unneeded objects. I am still new to using the tidyverse packages and using this space to learn more about how to use them efficiently. I will continue to explore this data set, adding new elements as I think of them, to try to understand how it is impacting our current culture.</p>
 
 <h1 id="test-test-test">Test Test Test</h1>
 
