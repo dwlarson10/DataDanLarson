@@ -75,13 +75,11 @@
 		October  4, 2017
 			&nbsp;&nbsp;
 			
-			 <span class="label label-success">News</span>
+			 <span class="label label-success">R</span>
 			
-			 <span class="label label-success">Tags</span>
+			 <span class="label label-success">tidyverse</span>
 			
-			 <span class="label label-success">Blog</span>
-			
-			 <span class="label label-success">Post</span>
+			 <span class="label label-success">ggplot2</span>
 			
 		</h4>
 	</div>
@@ -90,7 +88,7 @@
 			<div class="blogpost">
 			  <h2 id="data">Data</h2>
 
-<p>Following the incident in Charletsville VA this summer, I wanted to know just how many confederate memorials there were. I reached out on Data for Democracy and found a report published by the XXXX. I then scraped the PDG and created a data set. I know it isn’t complete, but it is a great start. I have published the data set on Data.World here: <a href="https://data.world/datadanlarson/confederatemonument">https://data.world/datadanlarson/confederatemonument</a></p>
+<p>Following the incident in Charlottesville VA this summer, I wanted to know just how many confederate memorials there were. I reached out on Data for Democracy and found a report published by the SPLC. I then scraped the PDG and created a data set. I know it isn’t complete, but it is a great start. I have published the data set on Data.World here: <a href="https://data.world/datadanlarson/confederatemonument">https://data.world/datadanlarson/confederatemonument</a></p>
 
 <p>This post is a combination of where these memorials are located and a quick tutorial on how to use the tidyverse to analyze it.</p>
 
@@ -104,14 +102,14 @@
 </span><span class="n">require</span><span class="p">(</span><span class="n">data.world</span><span class="p">)</span><span class="w">
 
 </span><span class="c1"># Setup your token</span><span class="w">
-</span><span class="n">data.world</span><span class="o">::</span><span class="n">set_config</span><span class="p">(</span><span class="n">data.world</span><span class="o">::</span><span class="n">save_config</span><span class="p">(</span><span class="n">auth_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRhdGFkYW5sYXJzb24iLCJpc3MiOiJhdXRob3JpdHk6ZGF0YWRvdHdvcmxkOjowQkYwRUJEMy0yREU3LTQ5RkItQjg3Qi1BRDAzMDU3QkI4OUUiLCJpYXQiOjE1MDQyNzIyOTAsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIiwidXNlcl9hcGlfYWRtaW4iLCJ1c2VyIl0sImV4cCI6MTUwOTQ1NjI5MCwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlLCJhdXRob3JpdHlpZHMiOlsiZGF0YWRvdHdvcmxkIl19.sOUQniICy1MaLyIe2nIf4ADjRkkciXF_0eKFegjtqwU72pRsC1gWxHFxmXgMqYbYTf1P54KMnpQmicz4OR4c0A"</span><span class="p">))</span><span class="w">
+</span><span class="n">data.world</span><span class="o">::</span><span class="n">set_config</span><span class="p">(</span><span class="n">data.world</span><span class="o">::</span><span class="n">save_config</span><span class="p">(</span><span class="n">auth_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"YOUR_DATA.WORLD_TOKEN))
 
-</span><span class="c1">#identify the data source</span><span class="w">
-</span><span class="n">link</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"https://data.world/datadanlarson/confederatemonument"</span><span class="w">
+#identify the data source
+link &lt;- "</span><span class="n">https</span><span class="o">://</span><span class="n">data.world</span><span class="o">/</span><span class="n">datadanlarson</span><span class="o">/</span><span class="n">confederatemonument</span><span class="s2">"
 
-</span><span class="c1">#extract the data</span><span class="w">
-</span><span class="n">confMon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.world</span><span class="o">::</span><span class="n">query</span><span class="p">(</span><span class="w">
-  </span><span class="n">data.world</span><span class="o">::</span><span class="n">qry_sql</span><span class="p">(</span><span class="s2">"SELECT * FROM CivilWarMamorials"</span><span class="p">),</span><span class="w">
+#extract the data
+confMon &lt;- data.world::query(
+  data.world::qry_sql("</span><span class="n">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">CivilWarMamorials</span><span class="err">"</span><span class="p">),</span><span class="w">
   </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">link</span><span class="w">
 </span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
@@ -143,7 +141,7 @@
 
 <h2 id="summarizing-with-tidyverse">Summarizing with tidyverse</h2>
 
-<p>The main benifit of using a tibble over a dataframe is the ease with which you can summarries your data. Without a tibble you may need to take multiple steps to subset, transform, and summarize your data. With a tibble you can do all of this with a singe chain of commands. In the code below, I am able to filter the data set to only monuments, create a table of counts by state and sort the table in only five rows of text. Additionally, I did not need to create a new dataframe.</p>
+<p>The main benefit of using a tibble over a dataframe is the ease with which you can summaries your data. Without a tibble you may need to take multiple steps to subset, transform, and summarize your data. With a tibble you can do all of this with a singe chain of commands. In the code below, I am able to filter the data set to only monuments, create a table of counts by state and sort the table in only five rows of text. Additionally, I did not need to create a new dataframe.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># Create the tibble</span><span class="w">
   </span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">civilwarstatus</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># Set the group by</span><span class="w">
@@ -171,7 +169,7 @@
 
 <h2 id="first-visualization">First Visualization</h2>
 
-<p>An additional benifit of using the tidyverse is that you can pipe in the ggplot2 commands. The tidyverse package allows you to do both data transformation and visualization within one string of commands. In the code below I have added the ggplot2 commands needed to create a barchart. I want to point out that by using the tidyverse, I have been able to keep my code relatively clean and haven’t needed to create any new dataframes.</p>
+<p>An additional benifit of using the tidyverse is that you can pipe in the ggplot2 commands. The tidyverse package allows you to do both data transformation and visualization within one string of commands. In the code below I have added the ggplot2 commands needed to create a bar chart. I want to point out that by using the tidyverse, I have been able to keep my code relatively clean and haven’t needed to create any new dataframes.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">civilwarstatus</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
@@ -183,11 +181,11 @@
   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of civil war monuments by state"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/unnamed-chunk-2-1.png" alt="Test Image" /></p>
+<p><img src="http://danlarson.io/static/img/unnamed-chunk-2-1.png" alt="Where are confederate monuments" /></p>
 
 <p>While the visual above gets the job done, it is always important to clean up your visuals for publication. Using ggplot2 allows the analyst to make all of the needed adjustments to background, the legend, and other various elements to brand your visuals.</p>
 
-<p>Looking at the data we can see that there are some obvious patterns. First, the states with the most memorials are states that belonged to the confederacy. However, some boarder states have a number of memorials. As we will see in the map below, the majority of the memorials are in the south east of the country. However, there is are a suprising numbe in the North West.</p>
+<p>Looking at the data we can see that there are some obvious patterns. First, the states with the most memorials are states that belonged to the confederacy. However, some boarder states have a number of memorials. As we will see in the map below, the majority of the memorials are in the south east of the country. However, there is are a surprising number in the North West.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">as.tibble</span><span class="p">(</span><span class="n">confMon</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">group_by</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">civilwarstatus</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
@@ -218,11 +216,11 @@
   </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/unnamed-chunk-3-1.png" alt="Test Image" /></p>
+<p><img src="http://danlarson.io/static/img/unnamed-chunk-3-1.png" alt="Where are confederate monuments - formatted" /></p>
 
 <h1 id="mapping-with-the-tidyverse">Mapping with the tidyverse</h1>
 
-<p>The visual above demonstates that confederate memorials are consolidated into only portion of the states, it is nice to be able to visual see how these states might be related. The tidyverse also gives the R user the ability to build maps quickly and easily. To get started we do need to bring in the ‘maps’ package.</p>
+<p>The visual above demonstrates that confederate memorials are consolidated into only portion of the states, it is nice to be able to visual see how these states might be related. The tidyverse also gives the R user the ability to build maps quickly and easily. To get started we do need to bring in the ‘maps’ package.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">maps</span><span class="p">)</span><span class="w">
 
@@ -252,44 +250,16 @@
   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of Confederate Memorials per State"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/unnamed-chunk-4-1.png" alt="Test Image" /></p>
+<p><img src="http://danlarson.io/static/img/unnamed-chunk-4-1.png" alt="State Map showing where confederate monuments are" /></p>
 
 <h2 id="wrapping-up">Wrapping up</h2>
 
 <p>Using the tibbles, tidyr, dplr, and ggplot2 allow for very quick and easy manipulation of data. With fewer then ten lines of code you are up have visualizations without filling up your environment with unneeded objects. I am still new to using the tidyverse packages and using this space to learn more about how to use them efficiently. I will continue to explore this data set, adding new elements as I think of them, to try to understand how it is impacting our current culture.</p>
 
-<h1 id="test-test-test">Test Test Test</h1>
-
 			   <hr>
 			   <div class="related-posts">
 				   <h5>Related Posts</h5>
 				   
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	June  5, 2013
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="//post1.html">A Full and Comprehensive Style Test (HTML)</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	May 27, 2013
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="//post2.html">Analysis of Confederate memorials</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
 			   </div>
 			</div>
 		</div>
