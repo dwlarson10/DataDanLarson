@@ -6,13 +6,144 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-10-21T09:01:44Z</updated>
+  <updated>2017-10-21T09:02:31Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
   </author>
   <rights type="text">Copyright © 2017 Dan Larson. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">Building a Strava Dashboard Post 1: Extracting Data</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/StravaExtract.html" />
+  <id>http://localhost:3000/StravaExtract</id>
+  <published>2017-10-21T00:00:00Z</published>
+  <updated>2017-10-21T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <h1 id="what-is-the-project">What is the project?</h1>
+
+<p>The goal of this blog is for me to share various techniques as I learn them. The next series of posts is my attempt at learning to build a dashboard for my Strava data. I am training for a Half in December and what better way to stay motivated than to monitor my progress. In this post, I will extract the Strava data using their API and build a few visualizations to see if I have any patterns.</p>
+
+<h2 id="extracting-data-from-strava">Extracting data from Strava.</h2>
+
+<p>The first step is to set up the API to pull. Before you can write any code you need to set up your Strava app [<a href="https://www.strava.com/settings/api">https://www.strava.com/settings/api</a>]. Once you have set up your Strava app you can extract data.</p>
+
+<p>The code below sets up the key, authorization and access. Then it sets up the authentication token. Next, we use the jsonlite package to do the actual data extraction.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">httr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">httpuv</span><span class="p">)</span><span class="w">
+</span><span class="n">my_app</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">oauth_app</span><span class="p">(</span><span class="s2">"strava"</span><span class="p">,</span><span class="w">
+                    </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"[your key]"</span><span class="p">,</span><span class="w">
+                    </span><span class="n">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"[your secret key]"</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+
+</span><span class="n">my_endpoint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">oauth_endpoint</span><span class="p">(</span><span class="w">
+  </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">authorize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"https://www.strava.com/oauth/authorize"</span><span class="p">,</span><span class="w">
+  </span><span class="n">access</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"https://www.strava.com/oauth/token"</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+
+</span><span class="n">sig</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">oauth2.0_token</span><span class="p">(</span><span class="n">my_endpoint</span><span class="p">,</span><span class="w"> </span><span class="n">my_app</span><span class="p">,</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"view_private"</span><span class="p">,</span><span class="w">  
+                      </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">use_oob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">as_header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">   
+                      </span><span class="n">use_basic_auth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+                      </span><span class="n">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+
+
+
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">jsonlite</span><span class="p">)</span><span class="w">
+</span><span class="n">jsonData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fromJSON</span><span class="p">(</span><span class="s2">"https://www.strava.com/api/v3/athlete/activities?access_token=cb576993aa710c4bf32ac7b9a006a0f110add218&amp;per_page=200"</span><span class="p">,</span><span class="n">flatten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Once I have loaded the data into our R console, I can start working with it. There are already 49 variables but there are a few that still need some work. First, we turn the data set into a tibble. A tibble is similar to a dataframe but interacts with the Tidyverse. We can then use the Mutate function to create the variables we want. We first modify the date to be a more R friendly format. Next we turn the distance variable from meters to miles. We then create a year, month, weekday, and hour of day variables from the time. For now, these variables are all we need. However, if we decide that we want more we can away use the mutate variable to quickly add more.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: tidyverse
+
+## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr
+
+## Warning: package 'dplyr' was built under R version 3.4.2
+
+## Conflicts with tidy packages ----------------------------------------------
+
+## filter(): dplyr, stats
+## lag():    dplyr, stats
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">lubridate</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Loading required package: lubridate
+
+##
+## Attaching package: 'lubridate'
+
+## The following object is masked from 'package:base':
+##
+##     date
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">strava</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.tibble</span><span class="p">(</span><span class="n">jsonData</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">start_date_local</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymd_hms</span><span class="p">(</span><span class="n">start_date_local</span><span class="p">),</span><span class="w">
+         </span><span class="n">miles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">1609.344</span><span class="p">,</span><span class="w">
+         </span><span class="n">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">(</span><span class="n">start_date_local</span><span class="p">),</span><span class="w">
+         </span><span class="n">wday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wday</span><span class="p">(</span><span class="n">start_date_local</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w">
+         </span><span class="n">month</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">month</span><span class="p">(</span><span class="n">start_date_local</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w">
+         </span><span class="n">hour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hour</span><span class="p">(</span><span class="n">start_date_local</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="quick-static-analysis">Quick static analysis</h2>
+
+<p>To start, I looked at what my running distance by month has been since starting to run in 2015. Interestingly, I steadily ran more in 2015 than I did last year. However, this year I am on track to have run more.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">strava</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">miles</span><span class="p">),</span><span class="n">heart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">average_heartrate</span><span class="p">),</span><span class="n">runs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">month</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span><span class="n">group</span><span class="o">=</span><span class="n">year</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">year</span><span class="p">)))</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s1">'identity'</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Total distance by month of year"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="http://danlarson.io/static/img/TotalDistance-1.png" alt="Total distance by month" /></p>
+
+<p>This could be deceiving especially knowing when I typically do half marathons. So, I also looked at the average length for each month. By adding this view of the data I am able to learn that while I ran more miles in 2015 than in 2016 my average run for each month was longer in 2016. By create a dashboard for these data, I will be able to remind myself of the trend I am hoping to create and hopefully encourage myself to meet my goals.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">strava</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">miles</span><span class="p">),</span><span class="n">heart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">average_heartrate</span><span class="p">),</span><span class="n">runs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">month</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span><span class="n">group</span><span class="o">=</span><span class="n">year</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">year</span><span class="p">)))</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s1">'identity'</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Average distance by month of year"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="http://danlarson.io/static/img/AverageDistance-1.png" alt="Average distance by month" /></p>
+
+<p>In addition to running further I have also been training to go faster. While some of my efforts appear to have worked in the beginning of 2017, I have a ways to go to break out of the pace I appear to be currently occupying.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">strava</span><span class="o">%&gt;%</span><span class="n">group_by</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">miles</span><span class="p">),</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">average_speed</span><span class="o">*</span><span class="p">(</span><span class="m">25</span><span class="o">/</span><span class="m">11</span><span class="p">)),</span><span class="n">heart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">average_heartrate</span><span class="p">),</span><span class="n">runs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">month</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">speed</span><span class="p">,</span><span class="n">group</span><span class="o">=</span><span class="n">year</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">year</span><span class="p">)))</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s1">'identity'</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Average Speed by month of year"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p><img src="http://danlarson.io/static/img/AverageSpeed-1.png" alt="Average distance by month" /></p>
+
+<p>In this post, I shared how to extract data using an R script and created a few charts that demonstrated why I am looking to build a dashboard to help improve my running routine. The next steps will be to learn write a shiny app to extract the Strava data when needed and build a dashboard. I hope to use the package FlexDashboards by RStudio to create the dashboard.</p>
+
+<p>If you found this interesting please let me know by finding me on Twitter.</p>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">Using the Tidyverse to analyze the location of Confederate Memorials</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/post3.html" />
