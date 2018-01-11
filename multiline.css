@@ -47,7 +47,7 @@
 .chart-wrapper .line {
   fill: none;
   stroke: steelblue;
-  stroke-width: 1px;
+  stroke-width: .5px;
 }
 
 .chart-wrapper .legend  {
@@ -86,13 +86,13 @@
 .chart-wrapper .focus circle {
   fill: crimson;
   stroke: crimson;
-  stroke-width: 2px;
-  fill-opacity: 15%;
+  stroke-width: 3px;
+  fill-opacity: 50%;
 }
 .chart-wrapper .focus rect {
     fill: lightblue;
-    opacity: 0.4;
-    border-radius: 2px;
+    opacity: 0.7;
+    border-radius: 5px;
 }
 .chart-wrapper .focus.line {
     stroke: steelblue;
