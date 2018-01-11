@@ -41,13 +41,13 @@
 
 }
 .chart-wrapper .axis path {
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 
 .chart-wrapper .line {
   fill: none;
   stroke: steelblue;
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 
 .chart-wrapper .legend  {
