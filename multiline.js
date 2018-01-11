@@ -41,7 +41,7 @@ function makeLineChart(dataset, xName, yObjs, axisLables) {
         } else {
             return d3.format(".0f")(d);
         }
-        
+
     };
 
     chartObj.xFormatter = chartObj.formatAsNumber;
@@ -77,7 +77,7 @@ function makeLineChart(dataset, xName, yObjs, axisLables) {
             return chartObj.xScale(chartObj.xFunct(d));
         }).y(getYScaleFn(yObj));
     }
-    
+
 
     chartObj.svg;
 
@@ -104,7 +104,7 @@ function makeLineChart(dataset, xName, yObjs, axisLables) {
         for (var y  in yObjs) {
             yObjs[y].path.attr("d", yObjs[y].line);
         }
-        
+
 
         d3.selectAll(".focus.line").attr("y2", chartObj.height);
 
@@ -138,7 +138,7 @@ function makeLineChart(dataset, xName, yObjs, axisLables) {
                 focus.transition().delay(700).style("display", "none");
             }).on("mousemove", mousemove);
         }
-        
+
 
         // Draw Axis
         chartObj.svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + chartObj.height + ")").call(chartObj.xAxis).append("text").attr("class", "label").attr("x", chartObj.width / 2).attr("y", 30).style("text-anchor", "middle").text(chartObj.xAxisLable);
@@ -185,12 +185,12 @@ function makeLineChart(dataset, xName, yObjs, axisLables) {
             minY = chartObj.height;
             for (var y  in yObjs) {
                 yObjs[y].tooltip.attr("transform", "translate(" + chartObj.xScale(chartObj.xFunct(d)) + "," + chartObj.yScale(yObjs[y].yFunct(d)) + ")");
-                yObjs[y].tooltip.select("text").text(chartObj.yFormatter(yObjs[y].yFunct(d)));
+                yObjs[y].tooltip.select("text").text(chartObj.yFormatter(yObjs[y].yFunct(d))+" lines");
                 minY = Math.min(minY, chartObj.yScale(yObjs[y].yFunct(d)));
             }
 
             focus.select(".focus.line").attr("transform", "translate(" + chartObj.xScale(chartObj.xFunct(d)) + ")").attr("y1", minY);
-            focus.select(".focus.year").text("Year: " + chartObj.xFormatter(chartObj.xFunct(d)));
+            focus.select(".focus.year").text("Episode: " + chartObj.xFormatter(chartObj.xFunct(d)));
         }
 
     };
