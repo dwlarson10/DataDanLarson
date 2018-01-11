@@ -101,6 +101,6 @@
     opacity: 0.5;
 }
 @media (max-width:500px){
-    .chart-wrapper .line {stroke-width: 3px;}
+    .chart-wrapper .line {stroke-width: 1px;}
     .chart-wrapper .legend {font-size: 14px;}
 }
