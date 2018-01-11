@@ -41,13 +41,13 @@
 
 }
 .chart-wrapper .axis path {
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 
 .chart-wrapper .line {
   fill: none;
   stroke: steelblue;
-  stroke-width: 5px;
+  stroke-width: 1px;
 }
 
 .chart-wrapper .legend  {
@@ -101,6 +101,6 @@
     opacity: 0.5;
 }
 @media (max-width:500px){
-    .chart-wrapper .line {stroke-width: 1px;}
+    .chart-wrapper .line {stroke-width: 3px;}
     .chart-wrapper .legend {font-size: 14px;}
 }
