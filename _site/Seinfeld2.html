@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta name="author" content="Dan Larson" />
+    <meta name="description" content="Personal blog and resume">
+    <link rel="favicon" href="/static/img/favicon.ico">
+
+    
+      <title>D3 Viz</title>
+    
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+    crossorigin="anonymous">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+	<!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/syntax.css" />
+
+    <!-- Google Analytics -->
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63826812-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </head>
+  <!-- Main Body-->
+  <body>
+  <!-- Wrap all page content here -->
+  <div id="wrap">
+    <!-- Navbar header -->
+    <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="http://danlarson.io"><i class="fa fa-home"></i></a>
+    </div>
+    <div id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/blog.html">BLOG</a></li>
+        <li><a href="/projects.html">PROJECTS</a></li>
+        <li><a href="/Books.html">BOOK LIST</a></li>
+        <li><a href="http://danlarson.io/assets/PDF/Resume.pdf">RESUME</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <!DOCTYPE html>
+<meta charset='utf-8'>
+<html>
+  <head>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel='stylesheet' href='styles.css'>
+  </head>
+  <body>
+    <script type='text/javascript' >
+
+    d3.csv('episodes.csv',function (data) {
+// CSV section
+  var body = d3.select('body')
+  var selectData = [ { "text" : "anger" },
+                     { "text" : "anticipation" },
+                     { "text" : "disgust" },
+                     { "text" : "fear" },
+                     { "text" : "joy" },
+                     { "text" : "sadness" },
+                     { "text" : "surprise" },
+                     { "text" : "trust" },
+                     { "text" : "negative" },
+                     { "text" : "positive" },
+                   ]
+
+  // Select X-axis Variable
+  var span = body.append('span')
+    .text('Select X-Axis variable: ')
+  var yInput = body.append('select')
+      .attr('id','xSelect')
+      .on('change',xChange)
+    .selectAll('option')
+      .data(selectData)
+      .enter()
+    .append('option')
+      .attr('value', function (d) { return d.text })
+      .text(function (d) { return d.text ;})
+  body.append('br')
+
+  // Select Y-axis Variable
+  var span = body.append('span')
+      .text('Select Y-Axis variable: ')
+  var yInput = body.append('select')
+      .attr('id','ySelect')
+      .on('change',yChange)
+    .selectAll('option')
+      .data(selectData)
+      .enter()
+    .append('option')
+      .attr('value', function (d) { return d.text })
+      .text(function (d) { return d.text ;})
+  body.append('br')
+
+  // Variables
+  var body = d3.select('body')
+  var margin = { top: 50, right: 50, bottom: 50, left: 50 }
+  var h = 1000 - margin.top - margin.bottom
+  var w = 1000 - margin.left - margin.right
+  var formatPercent = d3.format('.2%')
+  // Scales
+  var colorScale = d3.scale.category20()
+  var xScale = d3.scale.linear()
+    .domain([
+      d3.min([0,d3.min(data,function (d) { return d['postive'] })]),
+      d3.max([0,d3.max(data,function (d) { return d['positive'] })])
+      ])
+    .range([0,w])
+  var yScale = d3.scale.linear()
+    .domain([
+      d3.min([0,d3.min(data,function (d) { return d['positive'] })]),
+      d3.max([0,d3.max(data,function (d) { return d['positive'] })])
+      ])
+    .range([h,0])
+  // SVG
+  var svg = body.append('svg')
+      .attr('height',h + margin.top + margin.bottom)
+      .attr('width',w + margin.left + margin.right)
+    .append('g')
+      .attr('transform','translate(' + margin.left + ',' + margin.top + ')')
+  // X-axis
+  var xAxis = d3.svg.axis()
+    .scale(xScale)
+    //.tickFormat(formatPercent)
+    .ticks(5)
+    .orient('bottom')
+  // Y-axis
+  var yAxis = d3.svg.axis()
+    .scale(yScale)
+    //.tickFormat(formatPercent)
+    .ticks(5)
+    .orient('left')
+  // Circles
+  var circles = svg.selectAll('circle')
+      .data(data)
+      .enter()
+    .append('circle')
+      .attr('cx',function (d) { return xScale(d['positive']) })
+      .attr('cy',function (d) { return yScale(d['positive']) })
+      .attr('r','5')
+      .attr('stroke','black')
+      .attr('stroke-width',1)
+      .attr('fill',function (d,i) { return colorScale(i) })
+      .on('mouseover', function () {
+        d3.select(this)
+          .transition()
+          .duration(500)
+          .attr('r',20)
+          .attr('stroke-width',3)
+      })
+      .on('mouseout', function () {
+        d3.select(this)
+          .transition()
+          .duration(500)
+          .attr('r',5)
+          .attr('stroke-width',1)
+      })
+    .append('title') // Tooltip
+      .text(function (d) {return '\nepisode: '+ d['episode'] + ' '  + d['title']  +
+                           '\nAverage positives: ' + d['positive'] +
+                           '\nAverage negative sentiment in lines: ' + d['negative'] +
+                           '\nMax Drawdown: ' + d['Maximum Drawdown'] })
+  // X-axis
+  svg.append('g')
+      .attr('class','axis')
+      .attr('id','xAxis')
+      .attr('transform', 'translate(0,' + h + ')')
+      .call(xAxis)
+    .append('text') // X-axis Label
+      .attr('id','xAxisLabel')
+      .attr('y',-10)
+      .attr('x',w)
+      .attr('dy','.71em')
+      .style('text-anchor','end')
+      .text('positive')
+  // Y-axis
+  svg.append('g')
+      .attr('class','axis')
+      .attr('id','yAxis')
+      .call(yAxis)
+    .append('text') // y-axis Label
+      .attr('id', 'yAxisLabel')
+      .attr('transform','rotate(-90)')
+      .attr('x',0)
+      .attr('y',5)
+      .attr('dy','.71em')
+      .style('text-anchor','end')
+      .text('positive')
+
+  function yChange() {
+    var value = this.value // get the new y value
+    yScale // change the yScale
+      .domain([
+        d3.min([0,d3.min(data,function (d) { return d[value] })]),
+        d3.max([0,d3.max(data,function (d) { return d[value] })])
+        ])
+    yAxis.scale(yScale) // change the yScale
+    d3.select('#yAxis') // redraw the yAxis
+      .transition().duration(1000)
+      .call(yAxis)
+    d3.select('#yAxisLabel') // change the yAxisLabel
+      .text(value)
+    d3.selectAll('circle') // move the circles
+      .transition().duration(1000)
+      .delay(function (d,i) { return i*10})
+        .attr('cy',function (d) { return yScale(d[value]) })
+  }
+
+  function xChange() {
+    var value = this.value // get the new x value
+    xScale // change the xScale
+      .domain([
+        d3.min([0,d3.min(data,function (d) { return d[value] })]),
+        d3.max([0,d3.max(data,function (d) { return d[value] })])
+        ])
+    xAxis.scale(xScale) // change the xScale
+    d3.select('#xAxis') // redraw the xAxis
+      .transition().duration(1000)
+      .call(xAxis)
+    d3.select('#xAxisLabel') // change the xAxisLabel
+      .transition().duration(1000)
+      .text(value)
+    d3.selectAll('circle') // move the circles
+      .transition().duration(1000)
+      .delay(function (d,i) { return i*10})
+        .attr('cx',function (d) { return xScale(d[value]) })
+  }
+});
+    </script>
+  </body>
+</html>
+
+
+
+  </div>
+  <!-- Footer -->
+  <footer>
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted">© All rights reserved. Powered by <a href="http://jekyllrb.com/">Jekyll</a> and
+            <a href="http://www.github.com/biomadeira/sustain">sustain</a> with ♥</p>
+        </div>
+    </div>
+</footer>
+<div class="footer"></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+    integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+    crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/static/js/docs.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
