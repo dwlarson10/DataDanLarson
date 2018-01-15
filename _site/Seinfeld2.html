@@ -117,8 +117,8 @@
   // Variables
   var body = d3.select('body')
   //var margin = { top: 50, right: 50, bottom: 50, left: 50 }
-  //var h = 500 - margin.top - margin.bottom
-  //var w = 500 - margin.left - margin.right
+  var h = 1000 - margin.top - margin.bottom
+  var w = 1000 - margin.left - margin.right
   var formatPercent = d3.format('.2%')
   // Scales
   var colorScale = d3.scale.category20()
@@ -136,8 +136,8 @@
     .range([h,0])
   // SVG
   var svg = body.append('svg')
-      .attr('height',height + margin.top + margin.bottom)
-      .attr('width',width + margin.left + margin.right)
+      .attr('height',h + margin.top + margin.bottom)
+      .attr('width',w + margin.left + margin.right)
     .append('g')
       .attr('transform','translate(' + margin.left + ',' + margin.top + ')')
   // X-axis
