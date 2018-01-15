@@ -120,7 +120,7 @@ d3.tsv("characters.tsv", function(error, data){
 			.range([0,width]);
 
 	var y = d3.scale.ordinal()
-      .rangeBands([0,height],.1)
+      .rangeBands([height,0],.1)
 			.domain(data.map(function(d){ return d.speaker;}))
 			;
 
