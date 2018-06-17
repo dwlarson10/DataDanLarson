@@ -6,13 +6,81 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2018-04-19T22:22:19Z</updated>
+  <updated>2018-06-17T09:48:27Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
   </author>
   <rights type="text">Copyright © 2018 Dan Larson. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">Summer of data science goals</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/Summer-of-Data-Science.html" />
+  <id>http://localhost:3000/Summer of Data Science</id>
+  <published>2018-06-16T00:00:00Z</published>
+  <updated>2018-06-16T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <h2 id="what-is-the-summer-of-data-science">What is the summer of data science?</h2>
+
+<p>The summer of data science is the brain child of the <a href="https://twitter.com/BecomingDataSci?lang=en">Data Science Renee</a> on twitter. Read her first two posts <a href="https://www.becomingadatascientist.com/2018/05/28/summer-of-data-science-2018-sods18-launch-day/">here</a> and <a href="https://www.becomingadatascientist.com/2018/06/06/summer-of-data-science-goal-setting/">here</a>. For me, the summer of data science is an effort to focus on learning specific skills and to interact with the larger data science community. In this post, I will share my projects and learning plan for each one. As the summer progresses I hope to continue to post updates here and on twitter.</p>
+
+<h2 id="my-summer-projects">My Summer Projects</h2>
+
+<p>I have four projects this summer. Two are to create specific products while the other two are skill building/learning focused.</p>
+
+<ol>
+  <li>Philadelphia Mural image classifier</li>
+  <li>Dissect Podcast artist analysis</li>
+  <li>Learn more about virtual environments and how to use them</li>
+  <li>Read <a href="https://www.amazon.com/gp/offer-listing/0387848576/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0387848576&amp;linkCode=am2&amp;tag=sociall1-20&amp;linkId=9c6be555ff204ae60dcbb120dbfd9502">Elements of Statistical Learning</a></li>
+</ol>
+
+<h2 id="strategy-to-complete-the-projects">Strategy to complete the projects</h2>
+
+<p>My main focus for this summer is to develop a few habits. First, start a coding habit where I regular work through programing challenges. Second, do more analysis focusing on more and more complex statistical techniques. Third, build good coding habits. Finally, I hope to increase my overall understanding of statistical techniques and principles. Here is how I hope to spend the next 10 weeks.</p>
+
+<h4 id="project-1-philadelphia-mural-image-classifier">Project 1: Philadelphia mural image classifier</h4>
+
+<p>I have been talking about building a mural image classifier for some time. In the first couple weeks I plan to build a web scraping script that will download images from Instagram with the hashtag #PhillyMural. Once I have the script working. I will start learning how to build an image classifier to determine the identity of each mural. The end goal will be to create a database of geotagged murals throughout Philadelphia.</p>
+
+<ul>
+  <li>week 1: explore python packages for Instagram API challenges</li>
+  <li>week 2: set up python package and test functionality</li>
+  <li>week 3: set up package to download images</li>
+  <li>week 4: identify resources for image classifier</li>
+</ul>
+
+<h4 id="project-2-dissect-podcast-artist-analysis">Project 2: Dissect Podcast artist analysis</h4>
+
+<p>One of my favorite podcasts is Dissect. A long format analysis of particular albums. So far the host has done three seasons, Kendrick Lamar, Kanye West, and the current season Frank Ocean. I plan to do a series of analysis of these artists’ music and lyrics. While these analysis will be fun, I also hope to use this project to explore various statistical analysis techniques. On a weekly basis I will share both short form exploratory analysis and insights on new statistical methodology.</p>
+
+<ul>
+  <li>week 1: using the Spotify API extract data on all tracks by Kendrick Lamar, Kanye West, and Frank Ocean.</li>
+  <li>week 2: complete a exploratory analysis of the three artists.</li>
+  <li>week 3: create data set of artist lyrics</li>
+  <li>week 4: statistical analysis of the three artists and what makes them different from Spotify data set.</li>
+</ul>
+
+<h4 id="project-3-learn-more-about-virtual-environments-and-how-to-use-them">Project 3: Learn more about virtual environments and how to use them</h4>
+
+<p>This undertaking is to help me utilize best practices in programing/data science. In addition to understanding virtual environments for when I use python, I also plan to start using the project feature when working in R studio. Each week I will write about my own frustrations and epiphanies while trying to improve my basic techniques.</p>
+
+<h4 id="project-4-read-elements-of-statistical-learning">Project 4: Read Elements of Statistical Learning</h4>
+
+<p>I plan to read a chapter a week and work through the R examples on my own computer. The book is actually 18 chapters long so this goal might last a little into the fall. Each week I will share some of the knowledge I gain from this exercise.</p>
+
+<p>I hope to approach mastery understanding of the following techniques</p>
+
+<ul>
+  <li>Linear Regression</li>
+  <li>Logistic Regression</li>
+  <li>Decision Trees</li>
+  <li>Support Vector Machines (SVM)</li>
+  <li>Clustering</li>
+</ul>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">Building a Strava Dashboard Post 1: Extracting Data</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/StravaExtract.html" />
