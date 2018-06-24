@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta name="author" content="Dan Larson" />
+    <meta name="description" content="Personal blog and resume">
+    <link rel="favicon" href="/static/img/favicon.ico">
+
+    
+      <title>Analysis of Dissect Artists post 1: Getting Data</title>
+    
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+    crossorigin="anonymous">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+	<!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/syntax.css" />
+
+    <!-- Google Analytics -->
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63826812-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </head>
+  <!-- Main Body-->
+  <body>
+  <!-- Wrap all page content here -->
+  <div id="wrap">
+    <!-- Navbar header -->
+    <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="http://danlarson.io"><i class="fa fa-home"></i></a>
+    </div>
+    <div id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/blog.html">BLOG</a></li>
+        <li><a href="/projects.html">PROJECTS</a></li>
+        <li><a href="/Books.html">BOOK LIST</a></li>
+        <li><a href="http://danlarson.io/assets/PDF/Resume.pdf">RESUME</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <div class="container">
+	<div class="blog-post">
+		<h3>
+		  <strong><a href="/Dissect-analysis-gettng-data.html">Analysis of Dissect Artists post 1: Getting Data</a></strong>
+		</h3>
+	</div>
+	<div class="blog-title">
+		<h4>
+		June 24, 2018
+			&nbsp;&nbsp;
+			
+			 <span class="label label-success">Goals</span>
+			
+			 <span class="label label-success">Learning</span>
+			
+			 <span class="label label-success">Data science</span>
+			
+			 <span class="label label-success">sods18</span>
+			
+		</h4>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="blogpost">
+			  <p>#Analysis of Dissect Artists post 1: Getting Data</p>
+
+<p>For the past year I have been completely obsessed with the <a href="https://dissectpodcast.com/">Podcast Dissect</a>. My obsession started with Cole’s deep dive into Kanye West’s ‘Beautiful Dark Twisted Fantasy’ and then into Kendrick Lamar’s ‘To Pimp a Butterfly.’ Cole digs into the artist and the music and gives you an appreciation for the work that I personally didn’t have before. After listening to the Kanye season, I played BDTF on repeat for nearly six months. At the time of me writing this, Dissect is digging into Frank Ocean’s album ‘Blond.’ I thought I would dig into some of the tools available from Spotify and see if there are any statistical trends we can identify from the artists analyzed by Cole Cuchna.</p>
+
+<h3 id="data">Data</h3>
+
+<p>These data were collected using the Spotify API. Spotify enables users to collect artist data down to the track level. For each track they have developed 15 characteristics. They are: danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, duration_ms, time_signature, key_mode, track_popularity. The data also includes album popularity, release date, and track name.</p>
+
+<h3 id="spotifyr-package">spotifyr package</h3>
+
+<p>With many popular APIs there is often someone who has built a package or wrapper to use with R. The Spotify API is no different. There is a great R wrapper for the Spotify API called <a href="https://github.com/charlie86/spotifyr">spotifyr</a> that has been developed by <a href="https://github.com/charlie86">charles86</a> on github. With only a few lines of code I was able to get all the tracks from Frank Ocean, Kanye West, and Kendrick Lamar.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">spotifyr</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Sets the API Keys and authenticates app</span><span class="w">
+
+</span><span class="n">Sys.setenv</span><span class="p">(</span><span class="n">SPOTIFY_CLIENT_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'my_client_ID'</span><span class="p">)</span><span class="w">
+</span><span class="n">Sys.setenv</span><span class="p">(</span><span class="n">SPOTIFY_CLIENT_SECRET</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'my_client_secret'</span><span class="p">)</span><span class="w">
+</span><span class="n">access_token</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">get_spotify_access_token</span><span class="p">()</span><span class="w">
+
+</span><span class="c1">#Extracts data for each artists, adds a variable for artists and binds them to a single data-frame.</span><span class="w">
+
+</span><span class="n">FOdf</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">get_artist_audio_features</span><span class="p">(</span><span class="s1">'Frank Ocean'</span><span class="p">)</span><span class="w">
+</span><span class="n">FOdf</span><span class="o">$</span><span class="n">artist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'Frank Ocean'</span><span class="w">
+</span><span class="n">KWdf</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">get_artist_audio_features</span><span class="p">(</span><span class="s1">'Kanye West'</span><span class="p">)</span><span class="w">
+</span><span class="n">KWdf</span><span class="o">$</span><span class="n">artist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'Kanye West'</span><span class="w">
+</span><span class="n">KLdf</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">get_artist_audio_features</span><span class="p">(</span><span class="s1">'Kendrick Lamar'</span><span class="p">)</span><span class="w">
+</span><span class="n">KLdf</span><span class="o">$</span><span class="n">artist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'Kendrick Lamar'</span><span class="w">
+</span><span class="n">dissect</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind</span><span class="p">(</span><span class="n">FOdf</span><span class="p">,</span><span class="n">KLdf</span><span class="p">,</span><span class="n">KWdf</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="starting-an-exploratory-analysis">Starting an exploratory analysis</h3>
+
+<p>Now that we have the data we can start to explore it. The first thing that I like to do is just look at a summary of all the fields. While these summaries don’t tell us much, they do help to give me a sense of what each data field might look like.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dissect</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span><span class="n">track_popularity</span><span class="p">,</span><span class="n">danceability</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">loudness</span><span class="p">,</span><span class="n">mode</span><span class="p">,</span><span class="n">speechiness</span><span class="p">,</span><span class="n">acousticness</span><span class="p">,</span><span class="n">instrumentalness</span><span class="p">,</span><span class="n">liveness</span><span class="p">,</span><span class="n">valence</span><span class="p">,</span><span class="n">tempo</span><span class="p">,</span><span class="n">duration_ms</span><span class="p">,</span><span class="n">time_signature</span><span class="p">,</span><span class="n">key_mode</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summary</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##             artist    track_popularity  danceability        energy      
+##  Frank Ocean   : 34   Min.   : 0.00    Min.   :0.2010   Min.   :0.0715  
+##  Kanye West    :129   1st Qu.:49.00    1st Qu.:0.5032   1st Qu.:0.5000  
+##  Kendrick Lamar: 97   Median :57.00    Median :0.5965   Median :0.6430  
+##                       Mean   :52.16    Mean   :0.5918   Mean   :0.6105  
+##                       3rd Qu.:65.00    3rd Qu.:0.6815   3rd Qu.:0.7610  
+##                       Max.   :89.00    Max.   :0.9590   Max.   :0.9220  
+##                                                                         
+##       key        loudness          mode      speechiness    
+##  C#     :53   Min.   :-21.487   major:141   Min.   :0.0285  
+##  B      :30   1st Qu.: -8.959   minor:119   1st Qu.:0.0940  
+##  G      :27   Median : -6.947               Median :0.2325  
+##  F      :24   Mean   : -7.689               Mean   :0.2609  
+##  F#     :22   3rd Qu.: -5.599               3rd Qu.:0.3578  
+##  A#     :21   Max.   : -1.614               Max.   :0.9560  
+##  (Other):83                                                 
+##   acousticness      instrumentalness       liveness         valence      
+##  Min.   :0.000259   Min.   :0.0000000   Min.   :0.0541   Min.   :0.0300  
+##  1st Qu.:0.054125   1st Qu.:0.0000000   1st Qu.:0.1237   1st Qu.:0.2990  
+##  Median :0.194500   Median :0.0000000   Median :0.1990   Median :0.4400  
+##  Mean   :0.289753   Mean   :0.0216612   Mean   :0.2767   Mean   :0.4476  
+##  3rd Qu.:0.442000   3rd Qu.:0.0000218   3rd Qu.:0.3762   3rd Qu.:0.5923  
+##  Max.   :0.985000   Max.   :0.9740000   Max.   :0.9720   Max.   :0.9640  
+##                                                                          
+##      tempo         duration_ms     time_signature      key_mode  
+##  Min.   : 48.34   Min.   : 19133   Min.   :1.000   C# major: 38  
+##  1st Qu.: 85.81   1st Qu.:185610   1st Qu.:4.000   B minor : 24  
+##  Median :102.10   Median :235504   Median :4.000   G major : 22  
+##  Mean   :110.75   Mean   :235908   Mean   :3.981   A# minor: 15  
+##  3rd Qu.:128.60   3rd Qu.:280088   3rd Qu.:4.000   C# minor: 15  
+##  Max.   :193.02   Max.   :727107   Max.   :5.000   F minor : 15  
+##                                                    (Other) :131
+</code></pre></div></div>
+
+<h3 id="distribution-of-popularity-of-tracks-by-artists">Distribution of popularity of tracks by artists</h3>
+
+<p>The dependent variable that I am interested in for this analysis is the popularity of each track. What I hope to learn is for these artists which of the independent variables have the biggest impact on the success of the track. The box plots below show the distribution of popularity for each track by the three artists. The popularity of a track is measured between 0 and 100 and is based on the number of plays and the recency of those plays. Learn more about this metric and the other metrics collected from the API <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-track/">here</a></p>
+
+<p>I think the difference in track popularity by these three artists is very interesting. Frank Ocean’s two albums are distinctively different, all of Kendrick Lamar’s tracks appears to be overall evenly popular, and Kanye Wests tracks have the widest spread.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dissect</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="c1">#filter(artist == 'Frank Ocean')%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">artist</span><span class="w"> </span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">track_popularity</span><span class="p">))</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_boxplot</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_jitter</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">as.factor</span><span class="p">(</span><span class="n">dissected</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">plot.subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+    </span><span class="n">plot.caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+    </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">24</span><span class="p">),</span><span class="w">
+    </span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">,</span><span class="w"> </span><span class="n">legend.direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"horizontal"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Distribution of track popularity by artist"</span><span class="p">,</span><span class="w">
+    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Track Popularity"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">theme</span><span class="p">(</span><span class="n">panel.grid.major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_line</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+    </span><span class="n">axis.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="p">),</span><span class="w">
+    </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"gray4"</span><span class="p">),</span><span class="w">
+    </span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w">
+    </span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w">
+    </span><span class="n">legend.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Artist"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="http://danlarson.io/static/img/track_plot-1.png" alt="Track plot" /></p>
+
+<p>In an attempt to better understand the popularity measure, I will use many of the other features available from the Spotify API. The ridgeplots below shows the differences in each variable by artist. You can see that for many of the variables there are little differences in the distribution by artists.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">ggridges</span><span class="p">)</span><span class="w">
+
+</span><span class="n">dissect</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span><span class="n">album_name</span><span class="p">,</span><span class="n">danceability</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="n">speechiness</span><span class="p">,</span><span class="n">acousticness</span><span class="p">,</span><span class="n">instrumentalness</span><span class="p">,</span><span class="n">liveness</span><span class="p">,</span><span class="n">valence</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">gather</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">'key'</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="s1">'value'</span><span class="p">,</span><span class="o">-</span><span class="n">album_name</span><span class="p">,</span><span class="o">-</span><span class="n">artist</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">value</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">reorder</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">),</span><span class="n">fill</span><span class="o">=</span><span class="n">artist</span><span class="p">))</span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_density_ridges</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="m">.4</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_ridges</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Distribution of track features by artist'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">,</span><span class="n">plot.caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+    </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">24</span><span class="p">),</span><span class="w">  </span><span class="n">legend.direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"horizontal"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Feature"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Artist"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="http://danlarson.io/static/img/ridgeplot1-1.png" alt="Ridge Plot" /></p>
+
+<p>For a slightly different view of the data above here is a box-plot of each variable with each data point jittered over the plot.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dissect</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span><span class="n">album_name</span><span class="p">,</span><span class="n">danceability</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="n">speechiness</span><span class="p">,</span><span class="n">acousticness</span><span class="p">,</span><span class="n">instrumentalness</span><span class="p">,</span><span class="n">liveness</span><span class="p">,</span><span class="n">valence</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">gather</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">'key'</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="s1">'value'</span><span class="p">,</span><span class="o">-</span><span class="n">album_name</span><span class="p">,</span><span class="o">-</span><span class="n">artist</span><span class="p">)</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">key</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">value</span><span class="p">))</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_boxplot</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_jitter</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">artist</span><span class="p">))</span><span class="o">+</span><span class="w">
+   </span><span class="n">theme</span><span class="p">(</span><span class="n">plot.subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+    </span><span class="n">plot.caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+    </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">24</span><span class="p">),</span><span class="w">
+    </span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">,</span><span class="w"> </span><span class="n">legend.direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"horizontal"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Distribution of track features by artist"</span><span class="p">,</span><span class="w">
+    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Metric"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">theme</span><span class="p">(</span><span class="n">panel.grid.major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_line</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+    </span><span class="n">axis.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="p">),</span><span class="w">
+    </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"gray4"</span><span class="p">),</span><span class="w">
+    </span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w">
+    </span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w">
+    </span><span class="n">legend.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"feature"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p><img src="http://danlarson.io/static/img/track_features_box-1.png" alt="features box-plot" /></p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dissect</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="c1">#filter(artist == 'Frank Ocean')%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">artist</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">artist</span><span class="p">))</span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_density_ridges2</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="m">.5</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="m">6</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_ridges</span><span class="p">()</span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Tempo of tracks by artist'</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="n">legend.direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"horizontal"</span><span class="p">,</span><span class="n">plot.caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+    </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">24</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Artist"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p><img src="http://danlarson.io/static/img/tempo_ridge-1.png" alt="tempo plot" /></p>
+
+<h3 id="correlation-matrix">Correlation Matrix</h3>
+
+<p>The last thing that I am going to do with these data this week is to look for correlations between the variables. The correlation plot below shows which variables are correlated, how correlated, and whether or not the correlation is positive or negative. Look at what correlates to the track popularity metric, we will want to keep an eye on liveness, duration, instrumentalness, and tempo.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">corrplot</span><span class="p">)</span><span class="w">
+</span><span class="n">require</span><span class="p">(</span><span class="n">ggcorrplot</span><span class="p">)</span><span class="w">
+
+</span><span class="n">d</span><span class="m">2</span><span class="w"> </span><span class="o">&lt;-</span><span class="n">dissect</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">tempo</span><span class="p">,</span><span class="n">duration_ms</span><span class="p">,</span><span class="n">danceability</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="n">speechiness</span><span class="p">,</span><span class="n">acousticness</span><span class="p">,</span><span class="n">instrumentalness</span><span class="p">,</span><span class="n">liveness</span><span class="p">,</span><span class="n">valence</span><span class="p">,</span><span class="n">track_popularity</span><span class="p">)</span><span class="w">
+
+</span><span class="n">corr</span><span class="o">&lt;-</span><span class="n">cor</span><span class="p">(</span><span class="n">d</span><span class="m">2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ggcorrplot</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span><span class="w"> </span><span class="n">hc.order</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+     </span><span class="n">outline.col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">,</span><span class="w">
+     </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lower"</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">'circle'</span><span class="p">,</span><span class="w">
+     </span><span class="n">colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"#6D9EC1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"white"</span><span class="p">,</span><span class="w"> </span><span class="s2">"#E46726"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="p">),</span><span class="w">
+    </span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Correlation matrix of the spotify track features"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p><img src="http://danlarson.io/static/img/Correlation-1.png" alt="Correlation Plot" /></p>
+
+<h3 id="next-steps">Next steps</h3>
+
+<p>Next week I will utilize a logistic regression technique to understand which of the metrics can help explain the popularity of each track.</p>
+
+			   <hr>
+			   <div class="related-posts">
+				   <h5>Related Posts</h5>
+				   
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	June 16, 2018
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="//Summer-of-Data-Science.html">Summer of data science goals</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	October 21, 2017
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="//StravaExtract.html">Building a Strava Dashboard Post 1: Extracting Data</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	October  4, 2017
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="//post3.html">Using the Tidyverse to analyze the location of Confederate Memorials</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+			   </div>
+			</div>
+		</div>
+	</div>
+	
+
+</div>
+
+
+  </div>
+  <!-- Footer -->
+  <footer>
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted">© All rights reserved. Powered by <a href="http://jekyllrb.com/">Jekyll</a> and
+            <a href="http://www.github.com/biomadeira/sustain">sustain</a> with ♥</p>
+        </div>
+    </div>
+</footer>
+<div class="footer"></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+    integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+    crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/static/js/docs.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

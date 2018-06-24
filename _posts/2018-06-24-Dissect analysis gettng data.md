@@ -8,12 +8,8 @@ tags:
 - sods18
 ---
 
+#Analysis of Dissect Artists post 1: Getting Data
 
-Analysis of Dissect Artists post 1: Getting Data
-================
-
-Analysis of Frank Ocean (inspired by Dissect podcast)
------------------------------------------------------
 
 For the past year I have been completely obsessed with the [Podcast Dissect](https://dissectpodcast.com/). My obsession started with Cole's deep dive into Kanye West's 'Beautiful Dark Twisted Fantasy' and then into Kendrick Lamar's 'To Pimp a Butterfly.' Cole digs into the artist and the music and gives you an appreciation for the work that I personally didn't have before. After listening to the Kanye season, I played BDTF on repeat for nearly six months. At the time of me writing this, Dissect is digging into Frank Ocean's album 'Blond.' I thought I would dig into some of the tools available from Spotify and see if there are any statistical trends we can identify from the artists analyzed by Cole Cuchna.
 
