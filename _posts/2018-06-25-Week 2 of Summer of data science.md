@@ -12,7 +12,7 @@ tags:
 
 I know I am off to a slightly later start than most of the other people on twitter but who cares. This week I was somewhat successful, I was able to start the Dissect analysis, read the first chapter of Elements of Statistical Learning (who cares that it was only the intro chapter), and start collecting resources for my mural project.
 
-### Random articles that I thought were interesting
+#### Random articles that I thought were interesting
 
 * [DRINKING FROM THE FIREHOSE: USING R TO KEEP UP WITH CURRENT ML RESEARCH - PART 1](https://www.eokodie.com/blog/drinking-from-the-firehose-using-r-to-keep-up-with-current-ml-research---part-1/)
 
@@ -37,9 +37,11 @@ Unfortunately, I didn't make much progress on this project. However, I read up o
 
 #### Project 2: Dissect Podcast artist analysis
 
-I made a good bit of progress on this goal. First, I scraped all the data I needed and wrote this [post](http://danlarson.io/Dissect-analysis-gettng-data.html). Additionally, I researched the best ways get all the lyrics from each track by these artists. At this point the biggest challenge will be to get that data and process it into a data frame that I can work with. The plot below shows the relationship between danceability and track popularity. It is interesting that for both Kendrick Lamar and Kanye West there is a positive correlation but for Frank Ocean it is negative.
+I made a good bit of progress on this goal. First, I scraped all the data I needed and wrote this [post](http://danlarson.io/Dissect-analysis-gettng-data.html). Additionally, I researched the best ways get all the lyrics for each track by these artists. At this point the biggest challenge will be to get that data and process it into a data frame that I can work with.
 
-<p><img src="http://danlarson.io/static/img/danceability_and_popularity.png" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>
+A random plot I didn't share in the descriptive analysis post. The plot below shows the relationship between danceability and track popularity. It is interesting that for both Kendrick Lamar and Kanye West there is a positive correlation but for Frank Ocean it is negative.
+
+<p><img src="http://danlarson.io/static/img/danceability_and_popularity.png" alt="danceability and popularity" /></p>
 
 * week 1: using the Spotify API extract data on all tracks by Kendrick Lamar, Kanye West, and Frank Ocean.
 * week 2: complete a exploratory analysis of the three artists.
@@ -48,7 +50,7 @@ I made a good bit of progress on this goal. First, I scraped all the data I need
 
 #### Project 3: Learn more about virtual environments and how to use them
 
-While I didn't do a very good job on this project, I did come across some resources that I hope to read this week. This project is much more about utilizing tools and starting good habits so I hope to focus a little more on it this week.
+While I didn't do a very good job on this project, I did come across some resources that I am reading/processing now. This project is much more about utilizing tools and starting good habits so I hope to focus a little more on it this week.
 
 * [Report Factories in R](https://github.com/reconhub/reportfactory)
 
