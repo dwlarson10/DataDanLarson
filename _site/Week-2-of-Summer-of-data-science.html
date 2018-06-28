@@ -9,7 +9,7 @@
     <link rel="favicon" href="/static/img/favicon.ico">
 
     
-      <title>Summer of data science goals</title>
+      <title>Summer of data science week 2</title>
     
 
     <!-- Bootstrap -->
@@ -67,12 +67,12 @@
     <div class="container">
 	<div class="blog-post">
 		<h3>
-		  <strong><a href="/Summer-of-Data-Science.html">Summer of data science goals</a></strong>
+		  <strong><a href="/Week-2-of-Summer-of-data-science.html">Summer of data science week 2</a></strong>
 		</h3>
 	</div>
 	<div class="blog-title">
 		<h4>
-		June 16, 2018
+		June 25, 2018
 			&nbsp;&nbsp;
 			
 			 <span class="label label-success">Goals</span>
@@ -88,13 +88,17 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <h2 id="what-is-the-summer-of-data-science">What is the summer of data science?</h2>
+			  <h2 id="so-what-i-started-late">So what I started late</h2>
 
-<p>The summer of data science is the brain child of the <a href="https://twitter.com/BecomingDataSci?lang=en">Data Science Renee</a> on twitter. Read her first two posts <a href="https://www.becomingadatascientist.com/2018/05/28/summer-of-data-science-2018-sods18-launch-day/">here</a> and <a href="https://www.becomingadatascientist.com/2018/06/06/summer-of-data-science-goal-setting/">here</a>. For me, the summer of data science is an effort to focus on learning specific skills and to interact with the larger data science community. In this post, I will share my projects and learning plan for each one. As the summer progresses I hope to continue to post updates here and on twitter.</p>
+<p>I know I am off to a slightly later start than most of the other people on twitter but who cares. This week I was somewhat successful, I was able to start the Dissect analysis, read the first chapter of Elements of Statistical Learning (who cares that it was only the intro chapter), and start collecting resources for my mural project.</p>
 
-<h2 id="my-summer-projects">My Summer Projects</h2>
+<h3 id="random-articles-that-i-thought-were-interesting">Random articles that I thought were interesting</h3>
 
-<p>I have four projects this summer. Two are to create specific products while the other two are skill building/learning focused.</p>
+<ul>
+  <li><a href="https://www.eokodie.com/blog/drinking-from-the-firehose-using-r-to-keep-up-with-current-ml-research---part-1/">DRINKING FROM THE FIREHOSE: USING R TO KEEP UP WITH CURRENT ML RESEARCH - PART 1</a></li>
+</ul>
+
+<h2 id="reminder-here-are-my-projects-for-the-summer">Reminder: Here are my projects for the summer</h2>
 
 <ol>
   <li>Philadelphia Mural image classifier</li>
@@ -103,16 +107,12 @@
   <li>Read <a href="https://www.amazon.com/gp/offer-listing/0387848576/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0387848576&amp;linkCode=am2&amp;tag=sociall1-20&amp;linkId=9c6be555ff204ae60dcbb120dbfd9502">Elements of Statistical Learning</a></li>
 </ol>
 
-<h2 id="strategy-to-complete-the-projects">Strategy to complete the projects</h2>
-
-<p>My main focus for this summer is to develop a few habits. First, start a coding habit where I regular work through programing challenges. Second, do more analysis focusing on more and more complex statistical techniques. Third, build good coding habits. Finally, I hope to increase my overall understanding of statistical techniques and principles. Here is how I hope to spend the next 10 weeks.</p>
-
 <h4 id="project-1-philadelphia-mural-image-classifier">Project 1: Philadelphia mural image classifier</h4>
 
-<p>I have been talking about building a mural image classifier for some time. In the first couple weeks I plan to build a web scraping script that will download images from Instagram with the hashtag #PhillyMural. Once I have the script working. I will start learning how to build an image classifier to determine the identity of each mural. The end goal will be to create a database of geotagged murals throughout Philadelphia.</p>
+<p>Unfortunately, I didn’t make much progress on this project. However, I read up on a couple packages to scrape images and discovered that I will need to learn more about <a href="https://tensorflow.rstudio.com/keras/">Keras</a>, a TensorFlow package for Rstudio. I have adjusted my objectives below to match the current state of the project.</p>
 
 <ul>
-  <li>week 1: explore python packages for Instagram API challenges</li>
+  <li>week 2: explore python packages for Instagram API challenges / Work through Keras Demo</li>
   <li>week 2: set up python package and test functionality</li>
   <li>week 3: set up package to download images</li>
   <li>week 4: identify resources for image classifier</li>
@@ -120,7 +120,9 @@
 
 <h4 id="project-2-dissect-podcast-artist-analysis">Project 2: Dissect Podcast artist analysis</h4>
 
-<p>One of my favorite podcasts is Dissect. A long format analysis of particular albums. So far the host has done three seasons, Kendrick Lamar, Kanye West, and the current season Frank Ocean. I plan to do a series of analysis of these artists’ music and lyrics. While these analysis will be fun, I also hope to use this project to explore various statistical analysis techniques. On a weekly basis I will share both short form exploratory analysis and insights on new statistical methodology.</p>
+<p>I made a good bit of progress on this goal. First, I scraped all the data I needed and wrote this <a href="http://danlarson.io/Dissect-analysis-gettng-data.html">post</a>. Additionally, I researched the best ways get all the lyrics from each track by these artists. At this point the biggest challenge will be to get that data and process it into a data frame that I can work with. The plot below shows the relationship between danceability and track popularity. It is interesting that for both Kendrick Lamar and Kanye West there is a positive correlation but for Frank Ocean it is negative.</p>
+
+<p><img src="http://danlarson.io/static/img/danceability_and_popularity.png" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>
 
 <ul>
   <li>week 1: using the Spotify API extract data on all tracks by Kendrick Lamar, Kanye West, and Frank Ocean.</li>
@@ -131,39 +133,22 @@
 
 <h4 id="project-3-learn-more-about-virtual-environments-and-how-to-use-them">Project 3: Learn more about virtual environments and how to use them</h4>
 
-<p>This undertaking is to help me utilize best practices in programing/data science. In addition to understanding virtual environments for when I use python, I also plan to start using the project feature when working in R studio. Each week I will write about my own frustrations and epiphanies while trying to improve my basic techniques.</p>
+<p>While I didn’t do a very good job on this project, I did come across some resources that I hope to read this week. This project is much more about utilizing tools and starting good habits so I hope to focus a little more on it this week.</p>
+
+<ul>
+  <li><a href="https://github.com/reconhub/reportfactory">Report Factories in R</a></li>
+</ul>
 
 <h4 id="project-4-read-elements-of-statistical-learning">Project 4: Read Elements of Statistical Learning</h4>
 
-<p>I plan to read a chapter a week and work through the R examples on my own computer. The book is actually 18 chapters long so this goal might last a little into the fall. Each week I will share some of the knowledge I gain from this exercise.</p>
+<p>As planned this week I read the first chapter of the book <a href="https://www.amazon.com/gp/offer-listing/0387848576/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0387848576&amp;linkCode=am2&amp;tag=sociall1-20&amp;linkId=9c6be555ff204ae60dcbb120dbfd9502">Elements of Statistical Learning</a>. The chapter focused on what to expect from the book. The next chapter provides an introduction to supervised learning which is the primary focus of the book. A while back I purchased Chris Albon’s <a href="https://machinelearningflashcards.com/">Machine Learning Flashcards</a> and I am finally going to utilize them. Here is the one on supervised vs unsupervised learning.</p>
 
-<p>I hope to approach mastery understanding of the following techniques</p>
-
-<ul>
-  <li>Linear Regression</li>
-  <li>Logistic Regression</li>
-  <li>Decision Trees</li>
-  <li>Support Vector Machines (SVM)</li>
-  <li>Clustering</li>
-</ul>
+<p><img src="http://danlarson.io/static/img/machine_learning_flashcards_v1.9_png_print_Supervised_Vs_Unsupervised_print.png" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>
 
 			   <hr>
 			   <div class="related-posts">
 				   <h5>Related Posts</h5>
 				   
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	June 25, 2018
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="//Week-2-of-Summer-of-data-science.html">Summer of data science week 2</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
@@ -173,6 +158,19 @@
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
 								 	<strong><a href="//Dissect-analysis-gettng-data.html">Analysis of Dissect Artists post 1: Getting Data</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	June 16, 2018
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="//Summer-of-Data-Science.html">Summer of data science goals</a></strong>
 								 </h6>
 							 </div>
 						</div>

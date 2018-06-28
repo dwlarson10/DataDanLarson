@@ -6,13 +6,79 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2018-06-24T14:45:04Z</updated>
+  <updated>2018-06-27T21:51:42Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
   </author>
   <rights type="text">Copyright © 2018 Dan Larson. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">Summer of data science week 2</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/Week-2-of-Summer-of-data-science.html" />
+  <id>http://localhost:3000/Week 2 of Summer of data science</id>
+  <published>2018-06-25T00:00:00Z</published>
+  <updated>2018-06-25T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <h2 id="so-what-i-started-late">So what I started late</h2>
+
+<p>I know I am off to a slightly later start than most of the other people on twitter but who cares. This week I was somewhat successful, I was able to start the Dissect analysis, read the first chapter of Elements of Statistical Learning (who cares that it was only the intro chapter), and start collecting resources for my mural project.</p>
+
+<h3 id="random-articles-that-i-thought-were-interesting">Random articles that I thought were interesting</h3>
+
+<ul>
+  <li><a href="https://www.eokodie.com/blog/drinking-from-the-firehose-using-r-to-keep-up-with-current-ml-research---part-1/">DRINKING FROM THE FIREHOSE: USING R TO KEEP UP WITH CURRENT ML RESEARCH - PART 1</a></li>
+</ul>
+
+<h2 id="reminder-here-are-my-projects-for-the-summer">Reminder: Here are my projects for the summer</h2>
+
+<ol>
+  <li>Philadelphia Mural image classifier</li>
+  <li>Dissect Podcast artist analysis</li>
+  <li>Learn more about virtual environments and how to use them</li>
+  <li>Read <a href="https://www.amazon.com/gp/offer-listing/0387848576/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0387848576&amp;linkCode=am2&amp;tag=sociall1-20&amp;linkId=9c6be555ff204ae60dcbb120dbfd9502">Elements of Statistical Learning</a></li>
+</ol>
+
+<h4 id="project-1-philadelphia-mural-image-classifier">Project 1: Philadelphia mural image classifier</h4>
+
+<p>Unfortunately, I didn’t make much progress on this project. However, I read up on a couple packages to scrape images and discovered that I will need to learn more about <a href="https://tensorflow.rstudio.com/keras/">Keras</a>, a TensorFlow package for Rstudio. I have adjusted my objectives below to match the current state of the project.</p>
+
+<ul>
+  <li>week 2: explore python packages for Instagram API challenges / Work through Keras Demo</li>
+  <li>week 2: set up python package and test functionality</li>
+  <li>week 3: set up package to download images</li>
+  <li>week 4: identify resources for image classifier</li>
+</ul>
+
+<h4 id="project-2-dissect-podcast-artist-analysis">Project 2: Dissect Podcast artist analysis</h4>
+
+<p>I made a good bit of progress on this goal. First, I scraped all the data I needed and wrote this <a href="http://danlarson.io/Dissect-analysis-gettng-data.html">post</a>. Additionally, I researched the best ways get all the lyrics from each track by these artists. At this point the biggest challenge will be to get that data and process it into a data frame that I can work with. The plot below shows the relationship between danceability and track popularity. It is interesting that for both Kendrick Lamar and Kanye West there is a positive correlation but for Frank Ocean it is negative.</p>
+
+<p><img src="http://danlarson.io/static/img/danceability_and_popularity.png" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>
+
+<ul>
+  <li>week 1: using the Spotify API extract data on all tracks by Kendrick Lamar, Kanye West, and Frank Ocean.</li>
+  <li>week 2: complete a exploratory analysis of the three artists.</li>
+  <li>week 3: create data set of artist lyrics</li>
+  <li>week 4: statistical analysis of the three artists and what makes them different from Spotify data set.</li>
+</ul>
+
+<h4 id="project-3-learn-more-about-virtual-environments-and-how-to-use-them">Project 3: Learn more about virtual environments and how to use them</h4>
+
+<p>While I didn’t do a very good job on this project, I did come across some resources that I hope to read this week. This project is much more about utilizing tools and starting good habits so I hope to focus a little more on it this week.</p>
+
+<ul>
+  <li><a href="https://github.com/reconhub/reportfactory">Report Factories in R</a></li>
+</ul>
+
+<h4 id="project-4-read-elements-of-statistical-learning">Project 4: Read Elements of Statistical Learning</h4>
+
+<p>As planned this week I read the first chapter of the book <a href="https://www.amazon.com/gp/offer-listing/0387848576/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0387848576&amp;linkCode=am2&amp;tag=sociall1-20&amp;linkId=9c6be555ff204ae60dcbb120dbfd9502">Elements of Statistical Learning</a>. The chapter focused on what to expect from the book. The next chapter provides an introduction to supervised learning which is the primary focus of the book. A while back I purchased Chris Albon’s <a href="https://machinelearningflashcards.com/">Machine Learning Flashcards</a> and I am finally going to utilize them. Here is the one on supervised vs unsupervised learning.</p>
+
+<p><img src="http://danlarson.io/static/img/machine_learning_flashcards_v1.9_png_print_Supervised_Vs_Unsupervised_print.png" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">Analysis of Dissect Artists post 1: Getting Data</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/Dissect-analysis-gettng-data.html" />
