@@ -29,7 +29,7 @@ ggplot(dissect,aes(y=artist, x=track_popularity,color=artist,shape=factor(dissec
     shape = "Dissected", caption = "Track popularity based on Spotify popularity metric")
 ```
 
-<p><img src="http://danlarson.io/static/img/BeeswarmPopularity-1.png" alt="Beeswarm Track Popularity" /></p>
+<p><img src="http://danlarson.io/static/img/BeeswarmPopularity-1.png" width="100%" alt="Beeswarm Track Popularity" /></p>
 
 
 Okay... Okay... lets do one more bee swarm for fun. Here are the track features presented as a bee swarm plot. While I really like joy, plots as presented in the post last week, I think this plot really tells us a more interesting story about the different features.
@@ -53,7 +53,7 @@ dissect%>%
     legend.position = "none") +labs(x = "Value", y = NULL, colour = NULL)
 ```
 
-<p><img src="http://danlarson.io/static/img/BeeswarmTrackFeatures-1.png" alt="Beeswarm track features" /></p>
+<p><img src="http://danlarson.io/static/img/BeeswarmTrackFeatures-1.png" width="100%" alt="Beeswarm track features" /></p>
 
 The next step is to fit a linear model to the data. At this point, I am only using the subset of the variables from spotify to determine track popularity. In the future we are going to collect additional data to see if we can improve our understanding of what makes a track popular.
 
@@ -126,7 +126,7 @@ ggplot(td, aes(estimate, reorder(term,estimate), color = term)) +
     legend.position = "none") +labs(title = "Term estimates for track popularity model",
     y = NULL, colour = NULL)
 ```
-<p><img src="http://danlarson.io/static/img/TermEstimates-1.png" alt="TermEstimates" /></p>
+<p><img src="http://danlarson.io/static/img/TermEstimates-1.png" width="100%" alt="TermEstimates" /></p>
 
 #### Evaluating Model
 
@@ -149,7 +149,7 @@ autoplot(fit,label.size = 3)+
   theme_bw()
 ```
 
-<p><img src="http://danlarson.io/static/img/Evaluation-1.png" alt="Evaluation" /></p>
+<p><img src="http://danlarson.io/static/img/Evaluation-1.png" width="100%" alt="Evaluation" /></p>
 
 #### Next steps
 

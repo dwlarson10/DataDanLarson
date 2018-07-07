@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2018-07-06T18:22:10Z</updated>
+  <updated>2018-07-07T09:36:53Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
@@ -38,7 +38,7 @@
     </span><span class="n">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Dissected"</span><span class="p">,</span><span class="w"> </span><span class="n">caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Track popularity based on Spotify popularity metric"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/BeeswarmPopularity-1.png" alt="Beeswarm Track Popularity" /></p>
+<p><img src="http://danlarson.io/static/img/BeeswarmPopularity-1.png" width="100%" alt="Beeswarm Track Popularity" /></p>
 
 <p>Okay… Okay… lets do one more bee swarm for fun. Here are the track features presented as a bee swarm plot. While I really like joy, plots as presented in the post last week, I think this plot really tells us a more interesting story about the different features.</p>
 
@@ -60,7 +60,7 @@
     </span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Value"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/BeeswarmTrackFeatures-1.png" alt="Beeswarm track features" /></p>
+<p><img src="http://danlarson.io/static/img/BeeswarmTrackFeatures-1.png" width="100%" alt="Beeswarm track features" /></p>
 
 <p>The next step is to fit a linear model to the data. At this point, I am only using the subset of the variables from spotify to determine track popularity. In the future we are going to collect additional data to see if we can improve our understanding of what makes a track popular.</p>
 
@@ -132,7 +132,7 @@
     </span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Term estimates for track popularity model"</span><span class="p">,</span><span class="w">
     </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p><img src="http://danlarson.io/static/img/TermEstimates-1.png" alt="TermEstimates" /></p>
+<p><img src="http://danlarson.io/static/img/TermEstimates-1.png" width="100%" alt="TermEstimates" /></p>
 
 <h4 id="evaluating-model">Evaluating Model</h4>
 
@@ -154,7 +154,7 @@
   </span><span class="n">theme_bw</span><span class="p">()</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/Evaluation-1.png" alt="Evaluation" /></p>
+<p><img src="http://danlarson.io/static/img/Evaluation-1.png" width="100%" alt="Evaluation" /></p>
 
 <h4 id="next-steps">Next steps</h4>
 
@@ -205,7 +205,7 @@
 
 <p>A random plot I didn’t share in the descriptive analysis post. The plot below shows the relationship between danceability and track popularity. It is interesting that for both Kendrick Lamar and Kanye West there is a positive correlation but for Frank Ocean it is negative.</p>
 
-<p><img src="http://danlarson.io/static/img/danceability_and_popularity.png" alt="danceability and popularity" /></p>
+<p><img src="http://danlarson.io/static/img/danceability_and_popularity.png" width="100%" alt="danceability and popularity" /></p>
 
 <ul>
   <li>week 1: using the Spotify API extract data on all tracks by Kendrick Lamar, Kanye West, and Frank Ocean.</li>
@@ -226,7 +226,7 @@
 
 <p>As planned this week I read the first chapter of the book <a href="https://www.amazon.com/gp/offer-listing/0387848576/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0387848576&amp;linkCode=am2&amp;tag=sociall1-20&amp;linkId=9c6be555ff204ae60dcbb120dbfd9502">Elements of Statistical Learning</a>. The chapter focused on what to expect from the book. The next chapter provides an introduction to supervised learning which is the primary focus of the book. A while back I purchased Chris Albon’s <a href="https://machinelearningflashcards.com/">Machine Learning Flashcards</a> and I am finally going to utilize them. Here is the one on supervised vs unsupervised learning.</p>
 
-<p><img src="http://danlarson.io/static/img/machine_learning_flashcards_v1.9_png_print_Supervised_Vs_Unsupervised_print.png" width="50%" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>
+<p><img src="http://danlarson.io/static/img/machine_learning_flashcards_v1.9_png_print_Supervised_Vs_Unsupervised_print.png" width="100%" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>
  ]]></content>
 </entry>
 
@@ -334,7 +334,7 @@
     </span><span class="n">legend.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Artist"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/track_plot-1.png" alt="Track plot" /></p>
+<p><img src="http://danlarson.io/static/img/track_plot-1.png" width="100%" alt="Track plot" /></p>
 
 <p>In an attempt to better understand the popularity measure, I will use many of the other features available from the Spotify API. The ridgeplots below shows the differences in each variable by artist. You can see that for many of the variables there are little differences in the distribution by artists.</p>
 
@@ -350,7 +350,7 @@
     </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">24</span><span class="p">),</span><span class="w">  </span><span class="n">legend.direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"horizontal"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Feature"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Artist"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/ridgeplot1-1.png" alt="Ridge Plot" /></p>
+<p><img src="http://danlarson.io/static/img/ridgeplot1-1.png" width="100%" alt="Ridge Plot" /></p>
 
 <p>For a slightly different view of the data above here is a box-plot of each variable with each data point jittered over the plot.</p>
 
@@ -371,7 +371,7 @@
     </span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w">
     </span><span class="n">legend.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"feature"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p><img src="http://danlarson.io/static/img/track_features_box-1.png" alt="features box-plot" /></p>
+<p><img src="http://danlarson.io/static/img/track_features_box-1.png" width="100%" alt="features box-plot" /></p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dissect</span><span class="o">%&gt;%</span><span class="w">
   </span><span class="c1">#filter(artist == 'Frank Ocean')%&gt;%</span><span class="w">
@@ -381,7 +381,7 @@
   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Tempo of tracks by artist'</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="n">legend.direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"horizontal"</span><span class="p">,</span><span class="n">plot.caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
     </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">24</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Artist"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p><img src="http://danlarson.io/static/img/tempo_ridge-1.png" alt="tempo plot" /></p>
+<p><img src="http://danlarson.io/static/img/tempo_ridge-1.png" width="100%" alt="tempo plot" /></p>
 
 <h3 id="correlation-matrix">Correlation Matrix</h3>
 
@@ -403,7 +403,7 @@
     </span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Correlation matrix of the spotify track features"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p><img src="http://danlarson.io/static/img/Correlation-1.png" alt="Correlation Plot" /></p>
+<p><img src="http://danlarson.io/static/img/Correlation-1.png" width="100%" alt="Correlation Plot" /></p>
 
 <h3 id="next-steps">Next steps</h3>
 
@@ -579,7 +579,7 @@
   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Total distance by month of year"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/TotalDistance-1.png" alt="Total distance by month" /></p>
+<p><img src="http://danlarson.io/static/img/TotalDistance-1.png" width="100%" alt="Total distance by month" /></p>
 
 <p>This could be deceiving especially knowing when I typically do half marathons. So, I also looked at the average length for each month. By adding this view of the data I am able to learn that while I ran more miles in 2015 than in 2016 my average run for each month was longer in 2016. By create a dashboard for these data, I will be able to remind myself of the trend I am hoping to create and hopefully encourage myself to meet my goals.</p>
 
@@ -591,7 +591,7 @@
   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Average distance by month of year"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p><img src="http://danlarson.io/static/img/AverageDistance-1.png" alt="Average distance by month" /></p>
+<p><img src="http://danlarson.io/static/img/AverageDistance-1.png" width="100%" alt="Average distance by month" /></p>
 
 <p>In addition to running further I have also been training to go faster. While some of my efforts appear to have worked in the beginning of 2017, I have a ways to go to break out of the pace I appear to be currently occupying.</p>
 
@@ -602,7 +602,7 @@
   </span><span class="n">geom_point</span><span class="p">()</span><span class="o">+</span><span class="w">
   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Average Speed by month of year"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p><img src="http://danlarson.io/static/img/AverageSpeed-1.png" alt="Average distance by month" /></p>
+<p><img src="http://danlarson.io/static/img/AverageSpeed-1.png" width="100%" alt="Average distance by month" /></p>
 
 <p>In this post, I shared how to extract data using an R script and created a few charts that demonstrated why I am looking to build a dashboard to help improve my running routine. The next steps will be to learn write a shiny app to extract the Strava data when needed and build a dashboard. I hope to use the package FlexDashboards by RStudio to create the dashboard.</p>
 

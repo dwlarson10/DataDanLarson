@@ -41,7 +41,7 @@ I made a good bit of progress on this goal. First, I scraped all the data I need
 
 A random plot I didn't share in the descriptive analysis post. The plot below shows the relationship between danceability and track popularity. It is interesting that for both Kendrick Lamar and Kanye West there is a positive correlation but for Frank Ocean it is negative.
 
-<p><img src="http://danlarson.io/static/img/danceability_and_popularity.png" alt="danceability and popularity" /></p>
+<p><img src="http://danlarson.io/static/img/danceability_and_popularity.png" width="100%" alt="danceability and popularity" /></p>
 
 * week 1: using the Spotify API extract data on all tracks by Kendrick Lamar, Kanye West, and Frank Ocean.
 * week 2: complete a exploratory analysis of the three artists.
@@ -58,4 +58,4 @@ While I didn't do a very good job on this project, I did come across some resour
 
 As planned this week I read the first chapter of the book [Elements of Statistical Learning](https://www.amazon.com/gp/offer-listing/0387848576/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=0387848576&linkCode=am2&tag=sociall1-20&linkId=9c6be555ff204ae60dcbb120dbfd9502). The chapter focused on what to expect from the book. The next chapter provides an introduction to supervised learning which is the primary focus of the book. A while back I purchased Chris Albon's [Machine Learning Flashcards](https://machinelearningflashcards.com/) and I am finally going to utilize them. Here is the one on supervised vs unsupervised learning.
 
-<p><img src="http://danlarson.io/static/img/machine_learning_flashcards_v1.9_png_print_Supervised_Vs_Unsupervised_print.png" width="50%" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>
+<p><img src="http://danlarson.io/static/img/machine_learning_flashcards_v1.9_png_print_Supervised_Vs_Unsupervised_print.png" width="100%" alt="machine learning flashcards v1.9 png_print Supervised_Vs_Unsupervised_print" /></p>

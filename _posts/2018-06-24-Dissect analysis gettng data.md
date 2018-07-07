@@ -108,7 +108,7 @@ dissect%>%
     legend.background = element_rect(fill = NA)) +labs(x = "Artist")
 ```
 
-<p><img src="http://danlarson.io/static/img/track_plot-1.png" alt="Track plot" /></p>
+<p><img src="http://danlarson.io/static/img/track_plot-1.png" width="100%" alt="Track plot" /></p>
 
 In an attempt to better understand the popularity measure, I will use many of the other features available from the Spotify API. The ridgeplots below shows the differences in each variable by artist. You can see that for many of the variables there are little differences in the distribution by artists.
 
@@ -125,7 +125,7 @@ dissect%>%
     plot.title = element_text(size = 24),  legend.direction = "horizontal") +labs(x = NULL, y = "Feature", fill = "Artist")
 ```
 
-<p><img src="http://danlarson.io/static/img/ridgeplot1-1.png" alt="Ridge Plot" /></p>
+<p><img src="http://danlarson.io/static/img/ridgeplot1-1.png" width="100%" alt="Ridge Plot" /></p>
 
 For a slightly different view of the data above here is a box-plot of each variable with each data point jittered over the plot.
 
@@ -147,7 +147,7 @@ dissect%>%
     legend.key = element_rect(fill = NA),
     legend.background = element_rect(fill = NA)) +labs(x = "feature")
 ```
-<p><img src="http://danlarson.io/static/img/track_features_box-1.png" alt="features box-plot" /></p>
+<p><img src="http://danlarson.io/static/img/track_features_box-1.png" width="100%" alt="features box-plot" /></p>
 
 
 ``` r
@@ -159,7 +159,7 @@ dissect%>%
   ggtitle('Tempo of tracks by artist')+ theme(legend.position = "none", legend.direction = "horizontal",plot.caption = element_text(vjust = 1),
     plot.title = element_text(size = 24) ) +labs(x = NULL, y = "", fill = "Artist")
 ```
-<p><img src="http://danlarson.io/static/img/tempo_ridge-1.png" alt="tempo plot" /></p>
+<p><img src="http://danlarson.io/static/img/tempo_ridge-1.png" width="100%" alt="tempo plot" /></p>
 
 ### Correlation Matrix
 
@@ -182,7 +182,7 @@ ggcorrplot(corr, hc.order = TRUE,
     panel.background = element_rect(fill = NA)) +
   labs(title = "Correlation matrix of the spotify track features")
 ```
-<p><img src="http://danlarson.io/static/img/Correlation-1.png" alt="Correlation Plot" /></p>
+<p><img src="http://danlarson.io/static/img/Correlation-1.png" width="100%" alt="Correlation Plot" /></p>
 
 ### Next steps
 

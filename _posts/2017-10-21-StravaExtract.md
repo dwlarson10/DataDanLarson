@@ -107,7 +107,7 @@ strava%>%group_by(year,month)%>%
   ggtitle("Total distance by month of year")
 ```
 
-<p><img src="http://danlarson.io/static/img/TotalDistance-1.png" alt="Total distance by month" /></p>
+<p><img src="http://danlarson.io/static/img/TotalDistance-1.png" width="100%" alt="Total distance by month" /></p>
 
 This could be deceiving especially knowing when I typically do half marathons. So, I also looked at the average length for each month. By adding this view of the data I am able to learn that while I ran more miles in 2015 than in 2016 my average run for each month was longer in 2016. By create a dashboard for these data, I will be able to remind myself of the trend I am hoping to create and hopefully encourage myself to meet my goals.
 
@@ -120,7 +120,7 @@ strava%>%group_by(year,month)%>%
   ggtitle("Average distance by month of year")
 ```
 
-<p><img src="http://danlarson.io/static/img/AverageDistance-1.png" alt="Average distance by month" /></p>
+<p><img src="http://danlarson.io/static/img/AverageDistance-1.png" width="100%" alt="Average distance by month" /></p>
 
 In addition to running further I have also been training to go faster. While some of my efforts appear to have worked in the beginning of 2017, I have a ways to go to break out of the pace I appear to be currently occupying.
 
@@ -132,7 +132,7 @@ strava%>%group_by(year,month)%>%
   geom_point()+
   ggtitle("Average Speed by month of year")
 ```
-<p><img src="http://danlarson.io/static/img/AverageSpeed-1.png" alt="Average distance by month" /></p>
+<p><img src="http://danlarson.io/static/img/AverageSpeed-1.png" width="100%" alt="Average distance by month" /></p>
 
 In this post, I shared how to extract data using an R script and created a few charts that demonstrated why I am looking to build a dashboard to help improve my running routine. The next steps will be to learn write a shiny app to extract the Strava data when needed and build a dashboard. I hope to use the package FlexDashboards by RStudio to create the dashboard.
 
