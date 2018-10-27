@@ -7,10 +7,10 @@ images:
     link: https://public.tableau.com/profile/datadanlarson#!/vizhome/PerentalLeaveintheOECD/Dashboard1
   - image_path: http://danlarson.io/static/img/NikeFactory.png
     title: Nike Factory
-    link:https://public.tableau.com/profile/datadanlarson#!/vizhome/NikeManufacturingdashboard/Dashboard1
+    link: https://public.tableau.com/profile/datadanlarson#!/vizhome/NikeManufacturingdashboard/Dashboard1
   - image_path: http://danlarson.io/static/img/BigMac.png
     title: Big Mac
-    link:https://public.tableau.com/profile/datadanlarson#!/vizhome/BigMacIndex_27/Dashboard1
+    link: https://public.tableau.com/profile/datadanlarson#!/vizhome/BigMacIndex_27/Dashboard1
 
 ---
 
@@ -18,7 +18,7 @@ images:
   {% for image in page.images %}
       <li>
         <a href="{{image.link}}">
-          <img src="{{ image.image_path }}" alt="{{ image.title}}"/>
+          <img src="{{ image.image_path }}" alt="{{ image.title}}">
         </a>
       </li>
   {% endfor %}
