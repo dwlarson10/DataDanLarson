@@ -1,5 +1,6 @@
 ---
-layout: default
+layout: page
+title: Tableau
 images:
   - image_path: http://danlarson.io/static/img/MaternityLeave.png
     title: Maternity leave by country
@@ -11,6 +12,6 @@ images:
 ...
 <ul class="photo-gallery">
   {% for image in page.images %}
-    <li><img src="{{ image.image_path }}" alt="{{ image.title}}"/></li>
+    <li><img src="{{ image.image_path }}" alt="{{ image.title}}" link="{{image.link}}"/></li>
   {% endfor %}
 </ul>
