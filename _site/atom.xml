@@ -6,13 +6,28 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2018-10-27T14:41:54Z</updated>
+  <updated>2019-06-18T14:59:03Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
   </author>
-  <rights type="text">Copyright © 2018 Dan Larson. All rights reserved.</rights>
+  <rights type="text">Copyright © 2019 Dan Larson. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">Summer of Data Science kicking off 100 days of code</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/Summer-of-Data-Science-2019-and-100-days-of-code.html" />
+  <id>http://localhost:3000/Summer of Data Science 2019 and 100 days of code</id>
+  <published>2019-06-18T00:00:00Z</published>
+  <updated>2019-06-18T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <h3 id="summer-of-data-science">Summer of Data Science</h3>
+
+<p>Well here we go again. I am setting a lofty goal for myself to increase the amount of coding I do this summer in an effort to improve my skills. Last summer I tried this and fell a little short. So obviously this year I am going to try and do more. Well more but maybe actually less. My goal this summer is to actual write code more often. I plan on doing this by completing more tidy Tuesday activities, participate in Kaggle competitions, and develop my python skills more.</p>
+
+<h3 id="tidy-tuesday">Tidy Tuesday</h3>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">Analysis of Dissect Artists post 2: Linear regression</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/Dissect-Analysis-2.html" />
