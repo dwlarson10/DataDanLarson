@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2019-06-18T14:59:03Z</updated>
+  <updated>2019-06-19T01:56:39Z</updated>
   <author>
     <name>Dan Larson</name>
     <email>dwlarson10@gmail.com</email>
@@ -14,16 +14,34 @@
   <rights type="text">Copyright © 2019 Dan Larson. All rights reserved.</rights>
   
   <entry>
-  <title type="text">Summer of Data Science kicking off 100 days of code</title>
+  <title type="text">My learning goals for summer 2019</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/Summer-of-Data-Science-2019-and-100-days-of-code.html" />
   <id>http://localhost:3000/Summer of Data Science 2019 and 100 days of code</id>
   <published>2019-06-18T00:00:00Z</published>
   <updated>2019-06-18T00:00:00Z</updated>
   <content type="html"><![CDATA[ <h3 id="summer-of-data-science">Summer of Data Science</h3>
 
-<p>Well here we go again. I am setting a lofty goal for myself to increase the amount of coding I do this summer in an effort to improve my skills. Last summer I tried this and fell a little short. So obviously this year I am going to try and do more. Well more but maybe actually less. My goal this summer is to actual write code more often. I plan on doing this by completing more tidy Tuesday activities, participate in Kaggle competitions, and develop my python skills more.</p>
+<p>Well here we go again. I am setting a lofty goal for myself to increase the amount of coding I do this summer in an effort to improve my skills. Last summer I tried this and fell a little short. So obviously this year I am going to try and do more. Well more but maybe actually less. My goal this summer is to actual write code more often. I plan on doing this by completing more Tidy Tuesday activities, participate in Kaggle competitions, and develop my python skills more.</p>
 
 <h3 id="tidy-tuesday">Tidy Tuesday</h3>
+
+<p><a href="'https://github.com/rfordatascience/tidytuesday'">Tidy Tuesday</a> is a community event around developing R visualizations and analysis on a data set that is released each Tuesday. Over the summer and into the fall I hope to develop visualizations and my techniques each week. Since I am just now getting started with this challenge there is plenty of data to go back and do additional practice on.</p>
+
+<h3 id="kaggle">Kaggle</h3>
+
+<p>A friend of mine told me that I need to get my reps in when it comes to models and data analysis.</p>
+
+<p><img src="http://danlarson.io/static/img/reps.gif" width="100%" alt="Doing Reps" /></p>
+
+<p>There are plenty of great Kaggle evergreen data sets to get some practice on. My goal is to work through a few older competitions and then actual compete in at least two competitions over the summer.</p>
+
+<h3 id="python-package">Python package</h3>
+
+<p>I just wrapped up a course on Data Science and preprocessing web data. The final project was to develop a data set. I worked on a grouped that hoped to develop a data set that would enable the analysis of stock data as it relates to twitter and news data. I hope to continue developing this package to eventually start working more on this data.</p>
+
+<h3 id="100-days-of-code">100 days of code</h3>
+
+<p>I lay all of this out in a hope that everyday I will spend a minimum of 1 hour writing code on at least one of these projects. I hope to post my progress here on this blog.</p>
  ]]></content>
 </entry>
 
